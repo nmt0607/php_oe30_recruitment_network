@@ -5,6 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Role;
+use App\Image;
+use App\Tag;
+use App\Company;
+use App\Job;
 
 class User extends Authenticatable
 {
@@ -16,7 +21,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'cv',
+        'introduce',
     ];
 
     /**
@@ -25,7 +34,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -36,4 +46,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function tags()
+    {
+        return $this->morphMany(Tag::class, 'taggable');
+    }
+
+    public function company()
+    {
+        return $this->hasOne(Conpany::class);
+    }
+
+    public function jobs()
+    {
+        return $this->belongsToMany(Job::class, 'applications')->withPivot('status')->withTimestamps();
+    }
 }

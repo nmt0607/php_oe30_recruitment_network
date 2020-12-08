@@ -13,6 +13,7 @@
     <link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css' />
     <link href='{{ asset('bower_components/lato-font/css/lato-font.min.css') }}'>
     <link href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    @yield('css')
 </head>
 
 <body>
@@ -85,6 +86,7 @@
             <div class="clearfix"> </div>
         </div>
     </div>
+    @yield('script')
 </body>
 
 </html>

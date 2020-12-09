@@ -14,5 +14,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
 
-mix.styles('resources/css/register.css','public/css/register.css')
+mix.styles('resources/css/register.css', 'public/css/register.css')
     .js('resources/js/register.js', 'public/js')
+
+mix.styles('resources/css/edit_company.css', 'public/css/edit_company.css')

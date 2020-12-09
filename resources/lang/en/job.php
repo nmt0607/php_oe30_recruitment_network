@@ -11,7 +11,7 @@ return [
     'salary' => "Salary",
     'skill' => "Skill",
     'language' => "Language",
-    'work_permit' => "Work Permit",
+    'working_time' => "Working Time",
     'job_apply' => "Job list has been applied",
     'candidate_apply' => "Candidate list has been applied",
     'similar' => "Similar Jobs",

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Job;
 use App\Tag;
+use App\User;
+use App\Company;
+use DB;
+
 
 class JobController extends Controller
 {
@@ -27,13 +31,12 @@ class JobController extends Controller
         $skills = Tag::where('type', config('tag_config.skill'))->get();
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
-        $companyId = Auth::user()->company->id;
 
         return view('create_job', [
             'skills' => $skills,
             'langs' => $langs,
             'workingTimes' => $workingTimes,
-            'id' => $companyId,
+            'id' => 2,
         ]);
     }
 
@@ -45,8 +48,13 @@ class JobController extends Controller
 
     public function show($id)
     {
-        $similarJobs = Job::all();
         $job = Job::findOrFail($id);
+        $tagID = $job->tags->first()->id;
+
+        $tag = Tag::findOrFail($tagID);
+        $tag->load('jobs');
+        $similarJobs=$tag->jobs;
+
 
         return view('job_detail', [
             'similarJobs' => $similarJobs,
@@ -80,5 +88,123 @@ class JobController extends Controller
     {
         $job = Job::findOrFail($id)->delete();
         $job->tags()->detach();
+    }
+
+    public function userApply($id)
+    {
+        $user = User::findOrFail(1);
+        $job = Job::findOrFail($id);
+        $job->users()->attach($user->id, ['status' => 0]);
+        $skills = Tag::where('type', config('tag_config.skill'))->get();
+        $langs = Tag::where('type', config('tag_config.language'))->get();
+        $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
+
+
+        return view('apply_list', [
+            'user' => $user,
+            'skills' => $skills,
+            'langs' => $langs,
+            'workingTimes' => $workingTimes,
+        ]);
+    }
+
+    public function showApplyList()
+    {
+        $user = User::findOrFail(1);
+
+        return view('apply_list', [
+            'user' => $user,
+        ]);
+    }
+
+    public function showListCandidateApply($id)
+    {
+        $job = Job::findOrFail($id);
+
+        return view('candidate', [
+            'job' => $job,
+        ]);
+    }
+
+    public function showHistoryCreateJob()
+    {
+        $user = User::findOrFail(1);
+        $jobs = $user->company->jobs()->orderBy('created_at', 'desc')->get();
+
+        return view('job_history', [
+            'jobs' => $jobs,
+        ]);
+    }
+
+    public function accept($userId, $jobId)
+    {
+        $job = Job::findOrFail($jobId);
+        $job_user = DB::table('applications')->where([
+            ['user_id', '=', $userId],
+            ['job_id', '=', $jobId],
+        ])->update(['status' => 1]);;
+
+        return view('candidate', [
+            'job' => $job,
+        ]);
+    }
+
+    public function reject($userId, $jobId)
+    {
+        $job = Job::findOrFail($jobId);
+        $job_user = DB::table('applications')->where([
+            ['user_id', '=', $userId],
+            ['job_id', '=', $jobId],
+        ])->update(['status' => 2]);
+
+        return view('candidate', [
+            'job' => $job,
+        ]);
+    }
+
+    public function viewListUser()
+    {
+        $candidates = User::all()->where('role_id',1);
+        $employers = User::all()->where('role_id',2);
+
+        return view('user_list', [
+            'candidates' => $candidates,
+            'employers' => $employers,
+        ]);
+    }
+
+    public function viewListJob()
+    {
+        $approveJobs = Job::all()->where('status',1);
+        $unapproveJobs = Job::all()->where('status',0);
+        $skills = Tag::where('type', config('tag_config.skill'))->get();
+        $langs = Tag::where('type', config('tag_config.language'))->get();
+        $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
+
+        return view('job_list', [
+            'approveJobs' => $approveJobs,
+            'unapproveJobs' => $unapproveJobs,
+            'skills' => $skills,
+            'langs' => $langs,
+            'workingTimes' => $workingTimes,
+        ]);
+    }
+
+    public function approveJob($id)
+    {
+        Job::where('id', $id)->update(['status' => 1]);
+        $approveJobs = Job::all()->where('status',1);
+        $unapproveJobs = Job::all()->where('status',0);
+        $skills = Tag::where('type', config('tag_config.skill'))->get();
+        $langs = Tag::where('type', config('tag_config.language'))->get();
+        $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
+
+        return view('job_list', [
+            'approveJobs' => $approveJobs,
+            'unapproveJobs' => $unapproveJobs,
+            'skills' => $skills,
+            'langs' => $langs,
+            'workingTimes' => $workingTimes,
+        ]);
     }
 }

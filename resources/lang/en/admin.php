@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'approverd' => 'Job List',
-    'upapproverd' => 'Job List Unapproved',
+    'approved' => 'Job List',
+    'upapproved' => 'Job List Unapproved',
     'employer' => 'Employer List',
     'candidate' => "Candidate List",
 ];

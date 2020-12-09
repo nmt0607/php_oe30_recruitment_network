@@ -11,7 +11,10 @@
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css' />
-    <link href='{{ asset('bower_components/lato-font/css/lato-font.min.css') }}'>
+    <link href="{{ asset('bower_components/lato-font/css/lato-font.min.css') }}">
+    <link href="{{ asset('ckeditor/ckeditor.js') }}">
+    <link href="{{ asset('ckeditor/styles.js') }}">
+    <link href="{{ asset('css/mycss.css') }}" rel='stylesheet' type='text/css' />
     <link href="{{ asset('bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     @yield('css')
 </head>
@@ -88,5 +91,4 @@
     </div>
     @yield('script')
 </body>
-
 </html>

@@ -16,4 +16,5 @@ return [
     'upload_user' => "/upload/user",
     'avatar' => 1,
     'admin' => 3,
+    'logo' => 'images/logo.png',
 ];

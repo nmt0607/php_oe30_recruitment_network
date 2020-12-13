@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>@lang('app.title')</title>
+    <title>@lang('home.title')</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,15 +21,82 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href=""><img src="{{ asset('images/logo.png') }}" alt="" /></a>
+                <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ asset(config('user.logo')) }}"
+                        alt="" /></a>
             </div>
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="">@lang('app.listjobs')</a></li>
-                    <li><a href="">@lang('app.login')</a></li>
-                    <li><a href="">@lang('app.register')</a></li>
-                    <li><a href="">@lang('app.profile-user')</a></li>
-                    <li><a href="">@lang('app.profile-company')</a></li>
+                    <li>
+                        <a href="">@lang('home.listjobs')</a>
+                    </li>
+                    @if (!Auth::check())
+                        <li>
+                            <a href="{{ route('login') }}">@lang('home.login')</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('register') }}">@lang('home.register')</a>
+                        </li>
+                    @elseif (Auth::user()->role_id === config('user.user'))
+                        <li>
+                            <a class="" type="button" data-toggle="dropdown">@lang('home.profile_user')
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        href="{{ route('users.show', ['user' => Auth::user()->id]) }}">@lang('layout.view_profile')</a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="{{ route('users.edit', ['user' => Auth::user()->id]) }}">@lang('layout.edit_profile')</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="" type="button" data-toggle="dropdown">@lang('home.profile_company')
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        href="{{ route('companies.show', ['company' => Auth::user()->company->id]) }}">@lang('layout.view_company')</a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="{{ route('companies.edit', ['company' => Auth::user()->company->id]) }}">@lang('layout.edit_company')</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <input id="logout-input" type="submit" value="@lang('home.logout')">
+                                </form>
+                            </a>
+                        </li>
+                    @else
+                        <li>
+                            <a class="" type="button" data-toggle="dropdown">@lang('home.profile_user')
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a
+                                        href="{{ route('users.show', ['user' => Auth::user()->id]) }}">@lang('layout.view_profile')</a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="{{ route('users.edit', ['user' => Auth::user()->id]) }}">@lang('layout.edit_profile')</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <input id="logout-input" type="submit" value="@lang('home.logout')">
+                                </form>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </div>
             <div class="clearfix"> </div>
@@ -39,49 +106,49 @@
     <div class="footer">
         <div class="container">
             <div class="col-md-3 grid_3">
-                <h4>@lang('app.navigate')</h4>
+                <h4>@lang('home.navigate')</h4>
                 <ul class="f_list f_list1">
-                    <li><a href="">@lang('app.home')</a></li>
-                    <li><a href="">@lang('app.signin')</a></li>
-                    <li><a href="">@lang('app.joinnow')</a></li>
-                    <li><a href="">@lang('app.about')</a></li>
+                    <li><a href="">@lang('home.home')</a></li>
+                    <li><a href="">@lang('home.signin')</a></li>
+                    <li><a href="">@lang('home.joinnow')</a></li>
+                    <li><a href="">@lang('home.about')</a></li>
                 </ul>
                 <ul class="f_list">
-                    <li><a href="">@lang('app.feature')</a></li>
-                    <li><a href="">@lang('app.terms')</a></li>
-                    <li><a href="">@lang('app.contact')</a></li>
-                    <li><a href="">@lang('app.post')</a></li>
+                    <li><a href="">@lang('home.feature')</a></li>
+                    <li><a href="">@lang('home.terms')</a></li>
+                    <li><a href="">@lang('home.contact')</a></li>
+                    <li><a href="">@lang('home.post')</a></li>
                 </ul>
                 <div class="clearfix"> </div>
             </div>
             <div class="col-md-3 grid_3">
-                <h4>@lang('app.twitters')</h4>
+                <h4>@lang('home.twitters')</h4>
                 <div class="footer-list">
                     <ul>
                         <li><i class="fa fa-twitter tw1"> </i>
                             <p><span class="yellow"><a
-                                        href="">@lang('app.consectetuer')</a></span>@lang('app.adipiscing')</p>
+                                        href="">@lang('home.consectetuer')</a></span>@lang('home.adipiscing')</p>
                         </li>
                         <li><i class="fa fa-twitter tw1"> </i>
                             <p><span class="yellow"><a
-                                        href="">@lang('app.consectetuer')</a></span>@lang('app.adipiscing')</p>
+                                        href="">@lang('home.consectetuer')</a></span>@lang('home.adipiscing')</p>
                         </li>
                         <li><i class="fa fa-twitter tw1"> </i>
                             <p><span class="yellow"><a
-                                        href="">@lang('app.consectetuer')</a></span>@lang('app.adipiscing')</p>
+                                        href="">@lang('home.consectetuer')</a></span>@lang('home.adipiscing')</p>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-3 grid_3">
-                <h4>@lang('app.seeking')</h4>
-                <p>@lang('app.introduce')</p>
+                <h4>@lang('home.seeking')</h4>
+                <p>@lang('home.introduce')</p>
             </div>
             <div class="col-md-3 grid_3">
-                <h4>@lang('app.signup-email')</h4>
+                <h4>@lang('home.signup_email')</h4>
                 <form>
-                    <input type="text" class="form-control" placeholder="@lang('app.email')">
-                    <button type="button" class="btn red">@lang('app.subcribe')</button>
+                    <input type="text" class="form-control" placeholder="@lang('home.email')">
+                    <button type="button" class="btn red">@lang('home.subcribe')</button>
                 </form>
             </div>
             <div class="clearfix"> </div>

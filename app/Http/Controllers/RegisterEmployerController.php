@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\User;
-use App\Company;
+use App\Models\User;
+use App\Models\Company;
 use App\Http\Requests\RegisterEmployerRequest;
-
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -60,7 +59,6 @@ class RegisterEmployerController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
-            'introduce' => $request['introduce'],
             'role_id' => config('user.employer'),
             'status' => config('user.unconfirmed'),
         ]);

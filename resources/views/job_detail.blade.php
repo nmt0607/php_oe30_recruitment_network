@@ -59,7 +59,8 @@
                     <div class="row">
                         <div class="col-md-12 single_right">
                             <p>
-                                <b>@lang('job.company')</b>
+                                <b>@lang('job.company'): </b>
+                                {!! $job->company->introduce !!}
                             </p>
                         </div>
                     </div>

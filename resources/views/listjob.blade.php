@@ -65,7 +65,6 @@
                         </div>
                     </div>
                 </div>
-                {{ $jobs->links() }}
             </div>
         </div>
         <div class="col-md-3">

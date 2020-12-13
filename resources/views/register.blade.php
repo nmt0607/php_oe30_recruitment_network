@@ -98,7 +98,7 @@
                         </div>
                     </div>
                 </form>
-                <form action="{{ route('register-employer') }}" class="row form-employer" method="POST" id="form-employer">
+                <form action="{{ route('employer.register') }}" class="row form-employer" method="POST" id="form-employer">
                     @csrf
                     <div class="col-md-2"></div>
                     <div class="col-md-8">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +17,7 @@ class Job extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'application');
+        return $this->belongsToMany(User::class, 'applications');
     }
 
     public function tags()

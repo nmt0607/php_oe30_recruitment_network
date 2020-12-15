@@ -11,7 +11,7 @@ return [
     'salary' => "Lương",
     'skill' => "Kỹ năng",
     'language' => "Ngôn ngữ",
-    'work_permit' => "Thời gian làm việc",
+    'working_time' => "Thời gian làm việc",
     'job_apply' => "Danh sách công việc đã ứng tuyển",
     'candidate_apply' => "Danh sách ứng viên đã ứng tuyển",
     'similar' => "Công việc tương tự",

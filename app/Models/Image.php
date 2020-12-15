@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,4 +10,11 @@ class Image extends Model
     {
         return $this->morphTo();
     }
+
+    protected $fillable = [
+        'url',
+        'imageable_id',
+        'imageable_type',
+        'type',
+    ];
 }

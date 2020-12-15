@@ -23,3 +23,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/employer/register', 'RegisterEmployerController@register')
 ->name('employer.register');
+Route::resource('companies', CompanyController::class);

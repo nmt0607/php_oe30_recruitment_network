@@ -30,3 +30,9 @@ Route::resource('jobs', 'JobController');
 Route::post('apply/{id}', 'JobController@apply')->name('apply');
 
 Route::get('show-apply-list', 'JobController@showApplyList')->name('show_apply_list');
+
+Route::get('history','JobController@showHistoryCreateJob')->name('history');
+
+Route::get('list-candidate/{id}','JobController@showListCandidateApply')->name('list_candidate');
+
+Route::get('accept-reject/{user_id}/{job_id}/{status}','JobController@acceptOrReject')->name('accept_reject');

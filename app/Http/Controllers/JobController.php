@@ -118,4 +118,36 @@ class JobController extends Controller
     {
         return view('apply_list');
     }
+
+    public function showListCandidateApply($id)
+    {
+        $job = Job::findOrFail($id);
+        $users = $job->users()->orderBy('applications.status','asc')->get();
+
+        return view('candidate', [
+            'job' => $job,
+            'users' => $users,
+        ]);
+    }
+
+    public function showHistoryCreateJob()
+    {
+        $jobs = Auth::user()->company->jobs()->orderBy('created_at', 'desc')->get();
+
+        return view('job_history', [
+            'jobs' => $jobs,
+        ]);
+    }
+
+    public function acceptOrReject($userId, $jobId, $status)
+    {
+        $job = Job::findOrFail($jobId);
+        $job->users()->where('user_id', $userId)->update(['applications.status' => $status]);
+        $users = $job->users()->orderBy('applications.status','asc')->get();
+
+        return view('candidate', [
+            'job' => $job,
+            'users' => $users,
+        ]);
+    }
 }

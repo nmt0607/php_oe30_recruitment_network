@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Job;
-use App\Tag;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Tag;
+use App\Models\Job;
+use App\Models\User;
 
 class JobController extends Controller
 {
     public function index()
     {
+        $tag = Auth::user()->tags->where('type', config('tag_config.skill'))->first();
+        if (is_null($tag)) {
+            $suitableJobs = Job::orderBy('created_at', 'desc')->with('tags')->get();
+        } else {
+            $suitableJobs = $tag->jobs;
+        }
         $skills = Tag::where('type', config('tag_config.skill'))->get();
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
 
+
         return view('listjob', [
-            'jobs' => Job::orderBy('created_at', 'desc')->with('tags'),
+            'jobs' => Job::orderBy('created_at', 'desc')->with('tags')->get(),
+            'suitableJobs' => $suitableJobs,
             'skills' => $skills,
             'langs' => $langs,
             'workingTimes' => $workingTimes,
@@ -45,8 +55,13 @@ class JobController extends Controller
 
     public function show($id)
     {
-        $similarJobs = Job::all();
         $job = Job::findOrFail($id);
+        $tag = $job->tags->where('type', config('tag_config.skill'))->first();
+        if (is_null($tag)) {
+            $similarJobs = Job::orderBy('created_at', 'desc')->with('tags')->get();
+        } else {
+            $similarJobs = $tag->jobs;
+        }
 
         return view('job_detail', [
             'similarJobs' => $similarJobs,
@@ -80,5 +95,27 @@ class JobController extends Controller
     {
         $job = Job::findOrFail($id)->delete();
         $job->tags()->detach();
+    }
+
+    public function apply($id)
+    {
+        $user = Auth::user();
+        $job = Job::findOrFail($id);
+        $job->users()->attach($user->id, ['status' => config('job_config.waiting')]);
+        $skills = Tag::where('type', config('tag_config.skill'))->get();
+        $langs = Tag::where('type', config('tag_config.language'))->get();
+        $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
+
+        return view('apply_list', [
+            'user' => $user,
+            'skills' => $skills,
+            'langs' => $langs,
+            'workingTimes' => $workingTimes,
+        ]);
+    }
+
+    public function showApplyList()
+    {
+        return view('apply_list');
     }
 }

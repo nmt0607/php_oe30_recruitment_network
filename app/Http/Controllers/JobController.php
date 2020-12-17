@@ -34,23 +34,27 @@ class JobController extends Controller
 
     public function create()
     {
-        $skills = Tag::where('type', config('tag_config.skill'))->get();
-        $langs = Tag::where('type', config('tag_config.language'))->get();
-        $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
-        $companyId = Auth::user()->company->id;
+        if ($this->authorize('create', Job::class)) {
+            $skills = Tag::where('type', config('tag_config.skill'))->get();
+            $langs = Tag::where('type', config('tag_config.language'))->get();
+            $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
+            $companyId = Auth::user()->company->id;
 
-        return view('create_job', [
-            'skills' => $skills,
-            'langs' => $langs,
-            'workingTimes' => $workingTimes,
-            'id' => $companyId,
-        ]);
+            return view('create_job', [
+                'skills' => $skills,
+                'langs' => $langs,
+                'workingTimes' => $workingTimes,
+                'id' => $companyId,
+            ]);
+        }
     }
 
     public function store(Request $request)
     {
-        $job=Job::create($request->all());
-        $job->tags()->attach($request->tag);
+        if ($this->authorize('create', Job::class)) {
+            $job = Job::create($request->all());
+            $job->tags()->attach($request->tag);
+        }
     }
 
     public function show($id)
@@ -72,29 +76,36 @@ class JobController extends Controller
     public function edit($id)
     {
         $job = Job::findOrFail($id);
-        $skills = Tag::where('type', config('tag_config.skill'))->get();
-        $langs = Tag::where('type', config('tag_config.language'))->get();
-        $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
+        if ($this->authorize('update', $job)) {
+            $skills = Tag::where('type', config('tag_config.skill'))->get();
+            $langs = Tag::where('type', config('tag_config.language'))->get();
+            $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
 
-        return view('edit_job', [
-            'job' => $job,
-            'skills' => $skills,
-            'langs' => $langs,
-            'workingTimes' => $workingTimes,
-        ]);
+            return view('edit_job', [
+                'job' => $job,
+                'skills' => $skills,
+                'langs' => $langs,
+                'workingTimes' => $workingTimes,
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
     {
         $job = Job::findOrFail($id);
-        $job->update($request->all());
-        $job->tags()->sync($request->tag);
+        if ($this->authorize('update', $job)) {
+            $job->update($request->all());
+            $job->tags()->sync($request->tag);
+        }
     }
 
     public function destroy($id)
     {
-        $job = Job::findOrFail($id)->delete();
-        $job->tags()->detach();
+        $job = Job::findOrFail($id);
+        if ($this->authorize('update', $job)) {
+            $job->tags()->detach();
+            $job->delete();
+        }
     }
 
     public function apply($id)
@@ -122,32 +133,38 @@ class JobController extends Controller
     public function showListCandidateApply($id)
     {
         $job = Job::findOrFail($id);
-        $users = $job->users()->orderBy('applications.status','asc')->get();
+        if ($this->authorize('update', $job)) {
+            $users = $job->users()->orderBy('applications.status', 'asc')->get();
 
-        return view('candidate', [
-            'job' => $job,
-            'users' => $users,
-        ]);
+            return view('candidate', [
+                'job' => $job,
+                'users' => $users,
+            ]);
+        }
     }
 
     public function showHistoryCreateJob()
     {
-        $jobs = Auth::user()->company->jobs()->orderBy('created_at', 'desc')->get();
+        if ($this->authorize('create', Job::class)) {
+            $jobs = Auth::user()->company->jobs()->orderBy('created_at', 'desc')->get();
 
-        return view('job_history', [
-            'jobs' => $jobs,
-        ]);
+            return view('job_history', [
+                'jobs' => $jobs,
+            ]);
+        }
     }
 
     public function acceptOrReject($userId, $jobId, $status)
     {
         $job = Job::findOrFail($jobId);
-        $job->users()->where('user_id', $userId)->update(['applications.status' => $status]);
-        $users = $job->users()->orderBy('applications.status','asc')->get();
+        if ($this->authorize('update', $job)) {
+            $job->users()->where('user_id', $userId)->update(['applications.status' => $status]);
+            $users = $job->users()->orderBy('applications.status', 'asc')->get();
 
-        return view('candidate', [
-            'job' => $job,
-            'users' => $users,
-        ]);
+            return view('candidate', [
+                'job' => $job,
+                'users' => $users,
+            ]);
+        }
     }
 }

@@ -60,9 +60,9 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        $company = Auth::user()->company;
-        
-        return $company->id == $id ? view('edit_company', compact('company')) : redirect()->route('home');
+        $company = Company::findOrFail($id);
+
+        return $this->authorize('update', $company) ? view('edit_company', compact('company')) : redirect()->route('home');
     }
 
     /**
@@ -74,9 +74,9 @@ class CompanyController extends Controller
      */
     public function update(UpdateCompanyRequest $request, $id)
     {
-        $company = Auth::user()->company;
+        $company = Company::findOrFail($id);
 
-        if ($company->id == $id) {
+        if ($this->authorize('update', $company)) {
             $company->update($request->all());
             $avatar = $request->avatar;
 

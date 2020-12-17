@@ -17,7 +17,7 @@ class Job extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'applications');
+        return $this->belongsToMany(User::class, 'applications')->withPivot('status')->withTimestamps();
     }
 
     public function tags()

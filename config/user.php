@@ -1,10 +1,11 @@
 <?php
 
 return [
-    'user' => 1,
+    'candidate' => 1,
     'employer' => 2,
     'unconfirmed' => 0,
     'confirmed' => 1,
+    'block' => 2,
     'skill' => 1,
     'language' => 2,
     'working_time' => 3,

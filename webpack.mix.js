@@ -17,5 +17,9 @@ mix.js('resources/js/app.js', 'public/js')
 mix.styles('resources/css/register.css', 'public/css/register.css')
     .js('resources/js/register.js', 'public/js')
 
+mix.js('resources/js/list_user.js', 'public/js')
+
+mix.js('resources/js/list_job.js', 'public/js')
+
 mix.styles('resources/css/edit_company.css', 'public/css/edit_company.css')
 mix.styles('resources/css/edit_user.css','public/css/edit_user.css')

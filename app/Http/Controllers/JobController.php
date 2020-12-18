@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Tag;
 use App\Models\Job;
 use App\Models\User;
+use DB;
 
 class JobController extends Controller
 {
@@ -148,6 +149,31 @@ class JobController extends Controller
         return view('candidate', [
             'job' => $job,
             'users' => $users,
+        ]);
+    }
+
+    public function filter(Request $request)
+    {
+        if (is_null($request->tag)){
+            $jobs = Job::all();
+
+            return view('layouts.filter_job', [
+                'jobs' => $jobs,
+            ]);
+        }
+        $filterJobsId = DB::table('jobs')
+            ->join('taggables', 'jobs.id', '=', 'taggables.taggable_id')
+            ->join('tags', 'tags.id', '=', 'taggables.tag_id')
+            ->select('jobs.id')
+            ->whereIn('tags.id', $request->tag)
+            ->where('taggable_type', Job::class)
+            ->groupBy('jobs.id')
+            ->havingRaw('count(jobs.id)='.count($request->tag))
+            ->get()->pluck('id');
+        $filterJobs = Job::whereIn('id', $filterJobsId)->get();
+
+        return view('layouts.filter_job', [
+            'jobs' => $filterJobs,
         ]);
     }
 }

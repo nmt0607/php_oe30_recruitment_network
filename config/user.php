@@ -15,4 +15,5 @@ return [
     'upload_company' => "/upload/company",
     'upload_user' => "/upload/user",
     'avatar' => 1,
+    'admin' => 3,
 ];

@@ -26,4 +26,6 @@ return [
     'apply' => 'Ứng tuyển',
     'applynow' => 'Ứng tuyển ngay',
     'support' => 'Hỗ trợ:',
+    'introduce' => 'Giới thiệu',
+    'download' => 'Tải về CV của bạn',
 ];

@@ -26,4 +26,6 @@ return [
     'apply' => 'Apply',
     'applynow' => 'Apply Now',
     'support' => 'Support:',
+    'introduce' => 'Introduce',
+    'download' => 'Download CV',
 ];

@@ -49,7 +49,10 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = Company::findOrFail($id);
+        $images = $company->images()->where('type', config('user.avatar'))->first();
+
+        return view('company_profile', compact('company', 'images'));
     }
 
     /**
@@ -83,13 +86,13 @@ class CompanyController extends Controller
             if (isset($avatar) && ($avatar->getMimeType() === config('user.png') || $avatar->getMimeType() === config('user.jpg'))) {
                 $urlAvt = $avatar->move(public_path() . config('user.upload_company'), date(config('user.date_time')) . $avatar->getClientOriginalName());
                 $image = $company->images()->where('type', config('user.avatar'))->first();;
-
+                $url = config('user.upload_company') . date(config('user.date_time')) . $avatar->getClientOriginalName();
                 if ($image) {
-                    $image->url = $urlAvt;
+                    $image->url = $url;
                     $image->save();
                 } else {
                     Image::create([
-                        'url' => $urlAvt,
+                        'url' => $url,
                         'imageable_id' => $company->id,
                         'imageable_type' => Company::class,
                         'type' => config('user.avatar'),

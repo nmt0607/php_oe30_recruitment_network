@@ -36,4 +36,11 @@ Route::get('history','JobController@showHistoryCreateJob')->name('history');
 Route::get('list-candidate/{id}','JobController@showListCandidateApply')->name('list_candidate');
 
 Route::get('accept-reject/{user_id}/{job_id}/{status}','JobController@acceptOrReject')->name('accept_reject');
+
 Route::resource('users', UserController::class);
+
+Route::get('list-user', 'AdminController@viewListUser')->name('list_user');
+
+Route::get('list-job', 'AdminController@viewListJob')->name('list_job');
+
+Route::get('approve-job/{id}', 'AdminController@approveJob')->name('approve_job');

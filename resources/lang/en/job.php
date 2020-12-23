@@ -23,4 +23,7 @@ return [
     'detail' => "Job Detail",
     'company_info' => "Company Information",
     'history' => "Post history",
+    'apply' => 'Apply',
+    'applynow' => 'Apply Now',
+    'support' => 'Support:',
 ];

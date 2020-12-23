@@ -44,3 +44,5 @@ Route::get('list-user', 'AdminController@viewListUser')->name('list_user');
 Route::get('list-job', 'AdminController@viewListJob')->name('list_job');
 
 Route::get('approve-job/{id}', 'AdminController@approveJob')->name('approve_job');
+
+Route::post('filter', 'JobController@filter')->name('filter');

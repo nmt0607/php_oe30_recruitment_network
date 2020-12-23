@@ -22,4 +22,8 @@ mix.js('resources/js/list_user.js', 'public/js')
 mix.js('resources/js/list_job.js', 'public/js')
 
 mix.styles('resources/css/edit_company.css', 'public/css/edit_company.css')
+
 mix.styles('resources/css/edit_user.css','public/css/edit_user.css')
+
+mix.js('resources/js/filter_job.js', 'public/js')
+    .js('resources/js/suitable_job.js', 'public/js')

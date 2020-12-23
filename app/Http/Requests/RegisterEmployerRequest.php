@@ -27,7 +27,6 @@ class RegisterEmployerRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'introduce' => ['required', 'string'],
             'name-company' => ['required', 'string'],
             'address' => ['required', 'string'],
             'link-website' => ['required', 'string'],

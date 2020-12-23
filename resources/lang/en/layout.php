@@ -10,4 +10,8 @@ return [
     'keywords' => 'Keywords',
     'company' => 'Company',
     'find' => 'Find',
+    'view_profile' => 'View Profile',
+    'edit_profile' => 'Edit Profile',
+    'view_company' => 'View Company',
+    'edit_company' => 'Edit Company',
 ];

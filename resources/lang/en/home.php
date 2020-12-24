@@ -32,4 +32,8 @@ return [
     'email' => 'Email',
     'subcribe' => 'Subcribe',
     'logout' => 'Log out',
+    'language' => 'Language',
+    'en' => 'EN',
+    'vi' => 'VI',
+    'title' => 'Seeking',
 ];

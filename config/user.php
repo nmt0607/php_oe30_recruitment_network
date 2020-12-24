@@ -21,4 +21,6 @@ return [
     'default_avatar' => "/images/avatar.png",
     'default_avatar_company' => '/images/avatar_company.png',
     'limit' => 10,
+    'en' => 'en',
+    'vi' => 'vi',
 ];

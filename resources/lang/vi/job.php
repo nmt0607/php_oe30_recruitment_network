@@ -28,4 +28,6 @@ return [
     'support' => 'Hỗ trợ:',
     'introduce' => 'Giới thiệu',
     'download' => 'Tải về CV của bạn',
+    'contact' => 'Người phụ trách',
+    'email' => 'Email liên lạc',
 ];

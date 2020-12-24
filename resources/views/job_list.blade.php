@@ -60,9 +60,6 @@
                                                     {{ $job->salary }}
                                                 </p>
                                             </div>
-                                            <div class="col-md-2 single_right">
-                                                <a href="{{ route('apply', ['id' => $job->id]) }}">@lang('job.apply')</a>
-                                            </div>
                                         </div>
                                         <div class="clearfix"> </div>
                                     </div>
@@ -130,7 +127,6 @@
         <div class="clearfix"> </div>
     </div>
 </div>
-
 @endsection
 
 @section('script')

@@ -7,7 +7,9 @@
                 <div class="col_3">
                     <h3>@lang('login.newjob')</h3>
                     <ul class="list_1">
-                        <li><a href=""></a></li>
+                        @foreach ($jobs as $job)
+                            <li><a href="{{ route('jobs.show', ['job' => $job->id]) }}">{{ $job->title }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -20,28 +22,24 @@
                                 <h3>@lang('login.login-title')</h3>
                             </div>
                             <div class="textbox-wrap">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
                                 <div class="input-group">
                                     <span class="input-group-addon "><i class="fa fa-user"></i></span>
                                     <input type="text" name="email" required="required" class="form-control"
                                         placeholder="@lang('login.email')">
                                 </div>
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                             </div>
                             <div class="textbox-wrap">
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
                                 <div class="input-group">
                                     <span class="input-group-addon "><i class="fa fa-key"></i></span>
                                     <input type="password" name="password" required="required" class="form-control "
                                         placeholder="@lang('login.password')">
                                 </div>
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                             </div>
                             <div class="forgot">
                                 <div class="login-check">

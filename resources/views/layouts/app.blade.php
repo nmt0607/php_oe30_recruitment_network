@@ -27,7 +27,7 @@
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="">@lang('home.listjobs')</a>
+                        <a href="{{ route('jobs.index') }}">@lang('home.listjobs')</a>
                     </li>
                     @if (!Auth::check())
                         <li>
@@ -36,7 +36,7 @@
                         <li>
                             <a href="{{ route('register') }}">@lang('home.register')</a>
                         </li>
-                    @elseif (Auth::user()->role_id === config('user.user'))
+                    @elseif (Auth::user()->role_id === config('user.employer'))
                         <li>
                             <a class="" type="button" data-toggle="dropdown">@lang('home.profile_user')
                                 <span class="caret"></span></a>
@@ -97,6 +97,18 @@
                             </a>
                         </li>
                     @endif
+                    <li>
+                        <a class="" type="button" data-toggle="dropdown">@lang('home.language')
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ route('change-language', ['locale' => Config::get('user.en')]) }}">@lang('home.en')</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('change-language', ['locale' => Config::get('user.vi')]) }}">@lang('home.vi')</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <div class="clearfix"> </div>

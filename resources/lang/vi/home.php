@@ -32,4 +32,8 @@ return [
     'email' => 'Email',
     'subcribe' => 'Đăng ký',
     'logout' => 'Đăng nhập',
+    'language' => 'Ngôn ngữ',
+    'en' => 'EN',
+    'vi' => 'VI',
+    'title' => 'Seeking',
 ];

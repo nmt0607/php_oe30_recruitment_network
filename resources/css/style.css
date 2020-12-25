@@ -10,6 +10,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 #logout-input {
     border: none;
     background: none;
+    font-family: inherit;
+    line-height: inherit;
 }
 
 .invalid-feedback{

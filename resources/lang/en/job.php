@@ -28,4 +28,6 @@ return [
     'support' => 'Support:',
     'introduce' => 'Introduce',
     'download' => 'Download CV',
+    'contact' => 'Curator',
+    'email' => 'Contact Email',
 ];

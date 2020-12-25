@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Your email or password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'unconfirmed' => 'This account has not been confirmed',
+    'failed' => 'Email hoặc mật khẩu của bạn không chính xác. ',
+    'throttle' => 'Quá nhiều lần đăng nhập. Vui lòng thử lại sau: giây giây.',
+    'unconfirmed' => 'Tài khoản này chưa được xác nhận. ',
 ];

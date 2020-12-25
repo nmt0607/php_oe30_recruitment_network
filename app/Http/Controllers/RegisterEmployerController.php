@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Image;
 use App\Http\Requests\RegisterEmployerRequest;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -75,11 +76,30 @@ class RegisterEmployerController extends Controller
         ]);
     }
 
+    protected function createAvatar($idCompany, $idUser)
+    {
+        Image::create([
+            'url' => config('user.default_avatar_company'),
+            'imageable_id' => $idCompany,
+            'imageable_type' => Company::class,
+            'type' => config('user.avatar'),
+        ]);
+
+        Image::create([
+            'url' => config('user.default_avatar'),
+            'imageable_id' => $idUser,
+            'imageable_type' => User::class,
+            'type' => config('user.avatar'),
+        ]);
+    }
 
     public function register(RegisterEmployerRequest $request)
     {
         event(new Registered($user = $this->create($request)));
         event(new Registered($company = $this->createCompany($request, $user->id)));
+        
+        $this->createAvatar($company->id, $user->id);
+        
         if ($response = $this->registered($request, $user, $company)) {
             return $response;
         }

@@ -30,4 +30,8 @@ return [
     'download' => 'Tải về CV của bạn',
     'contact' => 'Người phụ trách',
     'email' => 'Email liên lạc',
+    'waiting' => 'Đang chờ phê duyệt',
+    'rejected' => 'Đã bị từ chối',
+    'accepted' => 'Đã được chấp nhận',
+    'cancel_apply' => 'Hủy ứng tuyển',
 ];

@@ -116,12 +116,31 @@ class JobController extends Controller
         $user = Auth::user();
         $job = Job::findOrFail($id);
         $job->users()->attach($user->id, ['status' => config('job_config.waiting')]);
+        $applyJobs = $user->jobs()->orderBy('applications.status', 'asc')->get();
         $skills = Tag::where('type', config('tag_config.skill'))->get();
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
 
         return view('apply_list', [
-            'user' => $user,
+            'jobs' => $applyJobs,
+            'skills' => $skills,
+            'langs' => $langs,
+            'workingTimes' => $workingTimes,
+        ]);
+    }
+
+    public function cancelApply($id)
+    {
+        $user = Auth::user();
+        $job = Job::findOrFail($id);
+        $job->users()->detach($user->id);
+        $applyJobs = $user->jobs()->orderBy('applications.status', 'asc')->get();
+        $skills = Tag::where('type', config('tag_config.skill'))->get();
+        $langs = Tag::where('type', config('tag_config.language'))->get();
+        $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
+
+        return view('apply_list', [
+            'jobs' => $applyJobs,
             'skills' => $skills,
             'langs' => $langs,
             'workingTimes' => $workingTimes,
@@ -130,7 +149,11 @@ class JobController extends Controller
 
     public function showApplyList()
     {
-        return view('apply_list');
+        $applyJobs = Auth::user()->jobs()->orderBy('applications.status', 'asc')->get();
+
+        return view('apply_list', [
+            'jobs' => $applyJobs,
+        ]);
     }
 
     public function showListCandidateApply($id)

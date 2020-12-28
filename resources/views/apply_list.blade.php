@@ -43,12 +43,18 @@
                                                             <b>@lang('job.company'): </b>
                                                             {{ $job->company->name }}
                                                         </p>
-                                                        <p>
-                                                            <b>@lang('job.tag'): </b>
+                                                        <span class="flex">
+                                                            <p><b>@lang('job.tag'): </b></p>
                                                             @foreach ($job->tags as $tag)
-                                                                <button class="tag">{{ $tag->name }}</button>
+                                                            <form action="{{ route('job_by_tag', ['id' => $tag->id]) }}" method="GET">
+                                                                @csrf
+                                                                <p>
+                                                                    &nbsp;
+                                                                    <button class="tag">{{ $tag->name }}</button>
+                                                                </p>
+                                                            </form>
                                                             @endforeach
-                                                        </p>
+                                                        </span>
                                                     </div>
                                                     <div class="col-md-5 single_right">
                                                         <p>

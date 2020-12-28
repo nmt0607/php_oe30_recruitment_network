@@ -28,9 +28,19 @@
                     @enderror
                 </label>
                 <input id="email" name="email" value="{{ $user->email }}" required="" type="email" />
-                <label for="cv">@lang('user.cv')</label>
+                <label for="cv">
+                    @lang('user.cv')
+                    @error('cv')
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;{{ $message }}</span>
+                    @enderror
+                </label>
                 <input type="file" id="cv" name="cv">
-                <label for="avatar">@lang('user.avatar')</label>
+                <label for="avatar">
+                    @lang('user.avatar')
+                    @error('avatar')
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;{{ $message }}</span>
+                    @enderror
+                </label>
                 <input type="file" id="avatar" name="avatar">
                 <label for="introduce">@lang('register.introduce')<em>&#x2a;</em>
                     @error('introduce')

@@ -34,7 +34,12 @@
                     @enderror
                 </label>
                 <input id="website" name="website" value="{{ $company->website }}" required="" type="text" />
-                <label for="avatar">@lang('company.avatar')</label>
+                <label for="avatar">
+                    @lang('company.avatar')
+                    @error('avatar')
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;{{ $message }}</span>
+                    @enderror
+                </label>
                 <input type="file" name="avatar" id="avatar">
                 <label for="introduce">@lang('company.introduce')<em>&#x2a;</em>
                     @error('introduce')
@@ -42,8 +47,8 @@
                     @enderror
                 </label>
                 <textarea class="ckeditor" id="introduce" name="introduce" required="" rows="4">
-                        {!!  $company->introduce !!}
-                    </textarea>
+                    {!! $company->introduce !!}
+                </textarea>
                 <button id="employer-button">@lang('company.update')</button>
             </form>
         </div>

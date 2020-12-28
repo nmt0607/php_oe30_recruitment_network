@@ -28,6 +28,7 @@ class UpdateCompanyRequest extends FormRequest
             'address' => ['required', 'string'],
             'website' => ['required', 'string'],
             'introduce' => ['required', 'string'],
+            'avatar' => ['mimes:png,jpeg'],
         ];
     }
 }

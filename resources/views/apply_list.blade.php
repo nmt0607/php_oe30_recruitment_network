@@ -18,7 +18,7 @@
                             </ul>
                             <div id="myTabContent" class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
-                                    @foreach (Auth::user()->jobs as $job)
+                                    @foreach ($jobs as $job)
                                         <div class="tab_grid">
                                             <div class="jobs-item with-thumb" href="">
                                                 <div class="thumb">
@@ -43,14 +43,20 @@
                                                             <b>@lang('job.company'): </b>
                                                             {{ $job->company->name }}
                                                         </p>
-                                                        <p>
-                                                            <b>@lang('job.tag'): </b>
+                                                        <span class="flex">
+                                                            <p><b>@lang('job.tag'): </b></p>
                                                             @foreach ($job->tags as $tag)
-                                                                <button class="tag">{{ $tag->name }}</button>
+                                                            <form action="{{ route('job_by_tag', ['id' => $tag->id]) }}" method="GET">
+                                                                @csrf
+                                                                <p>
+                                                                    &nbsp;
+                                                                    <button class="tag">{{ $tag->name }}</button>
+                                                                </p>
+                                                            </form>
                                                             @endforeach
-                                                        </p>
+                                                        </span>
                                                     </div>
-                                                    <div class="col-md-5 single_right">
+                                                    <div class="col-md-4 single_right">
                                                         <p>
                                                             <b>@lang('job.exp'): </b>
                                                             {{ $job->experience }}
@@ -59,12 +65,22 @@
                                                             <b>@lang('job.salary'): </b>{{ $job->salary }}
                                                         </p>
                                                     </div>
-                                                    <div class="col-md-2 single_right">
+                                                    <div class="col-md-3 single_right">
                                                         @if ($job->pivot->status == config('job_config.waiting'))
-                                                            @lang('job.waiting')
+                                                            <li class="dropdown my-drop-down">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font class="apply-status">@lang('job.waiting')</font></a>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <a href="{{ route('cancel_apply', ['id' => $job->id]) }}">
+                                                                        <font class="apply-status">@lang('job.cancel_apply')</font>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
                                                         @elseif ($job->pivot->status == config('job_config.accepted'))
-                                                            @lang('job.accepted')
-                                                        @else @lang('job.rejected')
+                                                            <font class="apply-status">@lang('job.accepted')</font>
+                                                        @else
+                                                            <font class="apply-status">@lang('job.rejected')</font>
                                                         @endif
                                                     </div>
                                                 </div>

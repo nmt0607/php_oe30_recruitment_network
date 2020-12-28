@@ -30,4 +30,8 @@ return [
     'download' => 'Download CV',
     'contact' => 'Curator',
     'email' => 'Contact Email',
+    'waiting' => 'Waiting',
+    'rejected' => 'Rejected',
+    'accepted' => 'Accepted',
+    'cancel_apply' => 'Cancel Apply',
 ];

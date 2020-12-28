@@ -31,6 +31,8 @@ Route::group(['middleware' => 'localization'], function () {
 
     Route::post('apply/{id}', 'JobController@apply')->name('apply');
 
+    Route::get('cancel-apply/{id}', 'JobController@cancelApply')->name('cancel_apply');
+
     Route::get('show-apply-list', 'JobController@showApplyList')->name('show_apply_list');
 
     Route::get('history','JobController@showHistoryCreateJob')->name('history');

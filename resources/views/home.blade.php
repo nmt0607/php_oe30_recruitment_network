@@ -15,7 +15,17 @@
             </ul>
         </div>
         <div class="single">
-            <div class="col-md-12 single_right">
+            <div class="col-md-4">
+                <div class="col_3">
+                    <h3>@lang('login.newjob')</h3>
+                    <ul class="list_1">
+                        @foreach ($newJobs as $job)
+                            <li><a href="{{ route('jobs.show', ['job' => $job->id]) }}">{{ $job->title }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 single_right">
                 <div class="but_list">
                     <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs" role="tablist">
@@ -139,17 +149,6 @@
                                                         {{ $job->salary }}
                                                     </p>
                                                 </div>
-                                                @if (Auth::user()->role_id === config('user.candidate'))
-                                                    <div class="col-md-2 single_right">
-                                                        <form action="{{ route('apply', ['id' => $job->id]) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-primary">
-                                                                @lang('job.apply')
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                @endif
                                             </div>
                                             <div class="clearfix"> </div>
                                         </div>

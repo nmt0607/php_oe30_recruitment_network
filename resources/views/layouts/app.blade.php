@@ -63,6 +63,14 @@
                                     <a
                                         href="{{ route('companies.edit', ['company' => Auth::user()->company->id]) }}">@lang('layout.edit_company')</a>
                                 </li>
+                                <li>
+                                    <a
+                                        href="{{ route('history')}}">@lang('layout.list_job_created')</a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="{{ route('jobs.create')}}">@lang('layout.create_job')</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -85,6 +93,10 @@
                                 <li>
                                     <a
                                         href="{{ route('users.edit', ['user' => Auth::user()->id]) }}">@lang('layout.edit_profile')</a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="{{ route('show_apply_list') }}">@lang('layout.show_apply_list')</a>
                                 </li>
                             </ul>
                         </li>

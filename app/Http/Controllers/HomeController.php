@@ -23,9 +23,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $allJobs = Job::OrderBy('created_at', 'desc')->get();
+        $allJobs = Job::with('images')->orderBy('created_at', 'desc')->get();
+        
+        foreach ($allJobs as $job) {
+            $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
+        }
         
         $newJobs = $allJobs->take(config('user.limit'))->all();
+
         if (Auth::check()) {
             $tags = array();
             $tagSkill = Auth::user()->tags->where('type', config('tag_config.skill'))->first();
@@ -51,7 +56,11 @@ class HomeController extends Controller
                     ->havingRaw('count(jobs.id)=' . count($tags))
                     ->get()->pluck('id');
 
-                $suitableJobs = Job::whereIn('id', $suitableJobsId)->orderBy('created_at', 'desc')->get();
+                $suitableJobs = Job::with('images')->whereIn('id', $suitableJobsId)->orderBy('created_at', 'desc')->get();
+
+                foreach ($suitableJobs as $job) {
+                    $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
+                }
 
                 return view('home', compact('allJobs', 'newJobs', 'suitableJobs'));
             }

@@ -68,15 +68,17 @@
                                                     <div class="col-md-3 single_right">
                                                         @if ($job->pivot->status == config('job_config.waiting'))
                                                             <li class="dropdown my-drop-down">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font class="apply-status">@lang('job.waiting')</font></a>
-                                                            <ul class="dropdown-menu">
-                                                                <li>
-                                                                    <a href="{{ route('cancel_apply', ['id' => $job->id]) }}">
-                                                                        <font class="apply-status">@lang('job.cancel_apply')</font>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                    <font class="apply-status">@lang('job.waiting')</font>
+                                                                </a>
+                                                                <ul class="dropdown-menu">
+                                                                    <li>
+                                                                        <a href="{{ route('cancel_apply', ['id' => $job->id]) }}">
+                                                                            <font class="apply-status">@lang('job.cancel_apply')</font>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
                                                         @elseif ($job->pivot->status == config('job_config.accepted'))
                                                             <font class="apply-status">@lang('job.accepted')</font>
                                                         @else

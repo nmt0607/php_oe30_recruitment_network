@@ -86,12 +86,28 @@
                     <h4><b>@lang('job.salary'): </b></h4>
                     <h3><b>&#36; {{ $job->salary }}</b></h3>
                     <br>
-                    <form action="{{ route('apply', ['id' => $job->id]) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">
-                            @lang('job.applynow')
-                        </button>
-                    </form>
+                    @if ($appliedJobs->contains($job))
+                        <li class="dropdown my-drop-down">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <font class="apply-status">@lang('job.waiting')</font>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('cancel_apply', ['id' => $job->id]) }}">
+                                        <font class="apply-status">@lang('job.cancel_apply')</font>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @else
+                        <form action="{{ route('apply', ['id' => $job->id]) }}" method="POST">
+                            @csrf
+                            @method('patch')
+                            <button type="submit" class="btn btn-primary">
+                                @lang('job.applynow')
+                            </button>
+                        </form>
+                    @endif
                     <hr>
                     <div class="row">
                         <div class="col-md-4 single_right">

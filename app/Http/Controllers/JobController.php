@@ -24,18 +24,18 @@ class JobController extends Controller
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
         $jobs = Job::with('images')->orderBy('created_at', 'desc')->with('tags')->get();
-        
         foreach ($jobs as $job) {
             $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
         }
-
         foreach ($suitableJobs as $job) {
             $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
         }
+        $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
 
         return view('listjob', [
             'jobs' => $jobs,
             'suitableJobs' => $suitableJobs,
+            'appliedJobs' => $appliedJobs,
             'skills' => $skills,
             'langs' => $langs,
             'workingTimes' => $workingTimes,
@@ -71,7 +71,7 @@ class JobController extends Controller
     {
         $job = Job::with('images')->findOrFail($id);
         $job->url = $job->images()->where('type', config('user.avatar'))->first()->url;
-        
+
         $tag = $job->tags->where('type', config('tag_config.skill'))->first();
         if (is_null($tag)) {
             $similarJobs = Job::orderBy('created_at', 'desc')->with('tags')->get();
@@ -80,9 +80,11 @@ class JobController extends Controller
         }
         $jobCurrent = Job::where('id', $id)->get();
         $similarJobs = $similarJobs->diff($jobCurrent);
+        $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
 
         return view('job_detail', [
             'similarJobs' => $similarJobs,
+            'appliedJobs' => $appliedJobs,
             'job' => $job,
         ]);
     }
@@ -268,6 +270,7 @@ class JobController extends Controller
         if (is_null($tag)) {
             $suitableJobs = Job::orderBy('created_at', 'desc')->with('tags')->get();
         }
+        $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
         $skills = Tag::where('type', config('tag_config.skill'))->get();
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
@@ -275,6 +278,7 @@ class JobController extends Controller
         return view('listjob', [
             'jobs' => $jobs,
             'suitableJobs' => $suitableJobs,
+            'appliedJobs' => $appliedJobs,
             'skills' => $skills,
             'langs' => $langs,
             'workingTimes' => $workingTimes,

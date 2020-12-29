@@ -29,7 +29,7 @@ Route::group(['middleware' => 'localization'], function () {
 
     Route::resource('jobs', 'JobController');
 
-    Route::post('apply/{id}', 'JobController@apply')->name('apply');
+    Route::patch('apply/{id}', 'JobController@apply')->name('apply');
 
     Route::get('cancel-apply/{id}', 'JobController@cancelApply')->name('cancel_apply');
 

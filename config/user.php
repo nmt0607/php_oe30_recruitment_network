@@ -23,4 +23,6 @@ return [
     'limit' => 10,
     'en' => 'en',
     'vi' => 'vi',
+    'phone' => '0914249080',
+    'email' => 'haunt0607@gmail.com',
 ];

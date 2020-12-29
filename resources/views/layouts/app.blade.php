@@ -54,7 +54,7 @@
                         <li>
                             <a class="" type="button" data-toggle="dropdown">@lang('home.profile_company')
                                 <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu my-drop-down-menu ">
                                 <li>
                                     <a
                                         href="{{ route('companies.show', ['company' => Auth::user()->company->id]) }}">@lang('layout.view_company')</a>
@@ -77,7 +77,7 @@
                         <li>
                             <a class="" type="button" data-toggle="dropdown">@lang('home.profile_user')
                                 <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu my-drop-down-menu">
                                 <li>
                                     <a
                                         href="{{ route('users.show', ['user' => Auth::user()->id]) }}">@lang('layout.view_profile')</a>
@@ -97,18 +97,6 @@
                             </a>
                         </li>
                     @endif
-                    <li>
-                        <a class="" type="button" data-toggle="dropdown">@lang('home.language')
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ route('change-language', ['locale' => Config::get('user.en')]) }}">@lang('home.en')</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('change-language', ['locale' => Config::get('user.vi')]) }}">@lang('home.vi')</a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </div>
             <div class="clearfix"> </div>
@@ -117,51 +105,113 @@
     @yield('content')
     <div class="footer">
         <div class="container">
-            <div class="col-md-3 grid_3">
-                <h4>@lang('home.navigate')</h4>
-                <ul class="f_list f_list1">
-                    <li><a href="">@lang('home.home')</a></li>
-                    <li><a href="">@lang('home.signin')</a></li>
-                    <li><a href="">@lang('home.joinnow')</a></li>
-                    <li><a href="">@lang('home.about')</a></li>
-                </ul>
+            <div class="col-sm-1 grid_3">
+            </div>
+            <div class="col-sm-2 grid_3">
+                <h4>@lang('home.seeking')</h4>
                 <ul class="f_list">
-                    <li><a href="">@lang('home.feature')</a></li>
-                    <li><a href="">@lang('home.terms')</a></li>
-                    <li><a href="">@lang('home.contact')</a></li>
-                    <li><a href="">@lang('home.post')</a></li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-facebook-square tw3">&nbsp;</i>
+                        </a>
+
+                        <a href="#">
+                            <i class="fa fa-twitter-square tw3">&nbsp;</i>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-google-plus-square tw3"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><i class="fa fa-phone"> {{ config('user.phone') }}</i></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><i class="fa fa-envelope"> {{ config('user.email') }}</i></span>
+                        </a>
+                    </li>
                 </ul>
                 <div class="clearfix"> </div>
             </div>
-            <div class="col-md-3 grid_3">
-                <h4>@lang('home.twitters')</h4>
+            <div class="col-sm-2 grid_3">
+                <h4>@lang('home.employer')</h4>
                 <div class="footer-list">
                     <ul>
-                        <li><i class="fa fa-twitter tw1"> </i>
-                            <p><span class="yellow"><a
-                                        href="">@lang('home.consectetuer')</a></span>@lang('home.adipiscing')</p>
+                        <li>
+                            <a href="{{ route('login') }}">
+                                <p>@lang('home.login')</p>
+                            </a>
                         </li>
-                        <li><i class="fa fa-twitter tw1"> </i>
-                            <p><span class="yellow"><a
-                                        href="">@lang('home.consectetuer')</a></span>@lang('home.adipiscing')</p>
+                        <li>
+                            <a href="{{ route('jobs.create') }}">
+                                <p>@lang('home.post_job')</p>
+                            </a>
                         </li>
-                        <li><i class="fa fa-twitter tw1"> </i>
-                            <p><span class="yellow"><a
-                                        href="">@lang('home.consectetuer')</a></span>@lang('home.adipiscing')</p>
+                        <li>
+                            <a href="#">
+                                <p>@lang('home.how_it_work')</p>
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-3 grid_3">
-                <h4>@lang('home.seeking')</h4>
-                <p>@lang('home.introduce')</p>
+            <div class="col-sm-2 grid_3">
+                <h4>@lang('home.candidate')</h4>
+                <div class="footer-list">
+                    <ul>
+                        <li>
+                            <a href="{{ route('login') }}">
+                                <p>@lang('home.login')</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('jobs.index') }}">
+                                <p>@lang('home.find_job')</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <p>@lang('home.how_it_work')</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-md-3 grid_3">
+            <div class="col-sm-3 grid_3">
                 <h4>@lang('home.signup_email')</h4>
                 <form>
                     <input type="text" class="form-control" placeholder="@lang('home.email')">
                     <button type="button" class="btn red">@lang('home.subcribe')</button>
                 </form>
+            </div>
+            <div class="col-sm-2 grid_3">
+                    <ul>
+                        <li class="dropdown my-drop-down">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <p><i class="fa fa-globe"></i>
+                                    @if (App::isLocale(Config::get('user.en')))
+                                        @lang('home.english')
+                                    @else
+                                        @lang('home.vietnamese')
+                                    @endif
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu my-drop-down-menu">
+                                <li>
+                                    <a href="{{ route('change-language', ['locale' => Config::get('user.en')]) }}">
+                                        @lang('home.english')
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('change-language', ['locale' => Config::get('user.vi')]) }}">
+                                        @lang('home.vietnamese')
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
             </div>
             <div class="clearfix"> </div>
         </div>

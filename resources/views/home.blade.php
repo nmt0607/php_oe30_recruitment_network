@@ -47,7 +47,9 @@
                                         <div class="tab_grid">
                                             <div class="jobs-item with-thumb">
                                                 <div class="thumb">
-                                                    <a href=""><img src="" class="img-responsive" alt="" /></a>
+                                                    <a href="{{ route('companies.show', ['company' => $job->company_id]) }}">
+                                                        <img src="{{ asset($job->url) }}" class="img-responsive" alt="" />
+                                                    </a>                                                
                                                 </div>
                                                 <div class="jobs_right">
                                                     <div class="date">{{ $job->created_at->format('d') }}
@@ -111,7 +113,9 @@
                                     <div class="tab_grid">
                                         <div class="jobs-item with-thumb">
                                             <div class="thumb">
-                                                <a href=""><img src="" class="img-responsive" alt="" /></a>
+                                                <a href="{{ route('companies.show', ['company' => $job->company_id]) }}">
+                                                    <img src="{{ asset($job->url) }}" class="img-responsive" alt="" />
+                                                </a>
                                             </div>
                                             <div class="jobs_right">
                                                 <div class="date">{{ $job->created_at->format('d') }}

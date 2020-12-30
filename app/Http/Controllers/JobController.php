@@ -16,16 +16,25 @@ class JobController extends Controller
     {
         $tag = Auth::user()->tags->where('type', config('tag_config.skill'))->first();
         if (is_null($tag)) {
-            $suitableJobs = Job::orderBy('created_at', 'desc')->with('tags')->get();
+            $suitableJobs = Job::with('images')->orderBy('created_at', 'desc')->with('tags')->get();
         } else {
             $suitableJobs = $tag->jobs;
         }
         $skills = Tag::where('type', config('tag_config.skill'))->get();
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
+        $jobs = Job::with('images')->orderBy('created_at', 'desc')->with('tags')->get();
+        
+        foreach ($jobs as $job) {
+            $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
+        }
+
+        foreach ($suitableJobs as $job) {
+            $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
+        }
 
         return view('listjob', [
-            'jobs' => Job::orderBy('created_at', 'desc')->with('tags')->get(),
+            'jobs' => $jobs,
             'suitableJobs' => $suitableJobs,
             'skills' => $skills,
             'langs' => $langs,
@@ -60,7 +69,9 @@ class JobController extends Controller
 
     public function show($id)
     {
-        $job = Job::findOrFail($id);
+        $job = Job::with('images')->findOrFail($id);
+        $job->url = $job->images()->where('type', config('user.avatar'))->first()->url;
+        
         $tag = $job->tags->where('type', config('tag_config.skill'))->first();
         if (is_null($tag)) {
             $similarJobs = Job::orderBy('created_at', 'desc')->with('tags')->get();
@@ -212,7 +223,11 @@ class JobController extends Controller
             ->groupBy('jobs.id')
             ->havingRaw('count(jobs.id)=' . count($request->tag))
             ->get()->pluck('id');
-        $filterJobs = Job::whereIn('id', $filterJobsId)->get();
+        $filterJobs = Job::with('images')->whereIn('id', $filterJobsId)->get();
+
+        foreach ($filterJobs as $job) {
+            $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
+        }
 
         return view('layouts.filter_job', [
             'jobs' => $filterJobs,
@@ -225,7 +240,7 @@ class JobController extends Controller
             $jobs = Job::with('images')->where('title', 'LIKE', '%' . $request->title . '%')->get();
 
             foreach ($jobs as $job) {
-                $job->url =  $job->images()->where('type', config('user.avatar'))->first();
+                $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
             }
 
             return view('search_jobs', [

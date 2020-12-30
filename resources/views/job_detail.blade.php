@@ -9,8 +9,8 @@
                     <div class="tab_grid">
                         <div class="jobs-item with-thumb">
                             <div class="thumb">
-                                <a href="">
-                                    <img src="" alt="" />
+                                <a href="{{ route('companies.show', ['company' => $job->company_id]) }}">
+                                    <img src="{{ asset($job->url) }}" class="img-responsive" alt="" />
                                 </a>
                             </div>
                             <div class="jobs_right">

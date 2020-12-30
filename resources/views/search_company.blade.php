@@ -12,14 +12,15 @@
                                 @foreach ($companies as $company)
                                     <div class="jobs-item with-thumb">
                                         <div class="thumb">
-                                            <a href="{{ asset($company->url) }}">
-                                                <img src="" class="img-responsive" alt="" />
+                                            <a href="{{ route('companies.show', ['company' => $company->id]) }}">
+                                                <img src="{{ asset($company->url) }}" class="img-responsive" alt="" />
                                             </a>
                                         </div>
                                         <div class="jobs_right">
                                             <div class="date_desc">
                                                 <h6 class="title">
-                                                    <a href="{{ route('companies.show', ['company' => $company->id]) }}">{{ $company->name }}</a>
+                                                    <a
+                                                        href="{{ route('companies.show', ['company' => $company->id]) }}">{{ $company->name }}</a>
                                                 </h6>
                                                 <p>{{ $company->address }}</p>
                                                 <span class="meta"></span>

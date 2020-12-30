@@ -15,7 +15,7 @@
             </ul>
         </div>
         <div class="single">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="col_3">
                     <h3>@lang('login.newjob')</h3>
                     <ul class="list_1">
@@ -25,7 +25,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-8 single_right">
+            <div class="col-md-9 single_right">
                 <div class="but_list">
                     <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs" role="tablist">

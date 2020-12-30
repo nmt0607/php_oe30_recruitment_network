@@ -36,6 +36,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     list-style: none;
 }
 
+.my-drop-down-menu {
+    min-width: 130px;
+}
+
 /* template css */
 
 h4, h5, h6, h1, h2, h3 {
@@ -631,7 +635,7 @@ ul.f_list li a, ul.f_list2 li a {
 }
 
 .footer-list li {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .footer-list li p {
@@ -1060,6 +1064,14 @@ i.tw2 {
     color: #fff;
     float: left;
     font-size: 15px;
+    line-height: 2em;
+    margin-right: 10px;
+}
+
+i.tw3 {
+    color: #fff;
+    float: left;
+    font-size: 35px;
     line-height: 2em;
     margin-right: 10px;
 }

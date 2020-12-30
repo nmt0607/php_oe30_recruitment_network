@@ -87,7 +87,8 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('delete')
-                                                            <button type="submit" class="fa fa-trash-o btn">
+                                                            <button data-confirm="@lang('job.delete_job')" type="submit"
+                                                                class="fa fa-trash-o btn button-confirm">
                                                             </button>
                                                         </form>
                                                     </li>
@@ -105,4 +106,8 @@
             <div class="clearfix"></div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/job_history.js') }}"></script>
 @endsection

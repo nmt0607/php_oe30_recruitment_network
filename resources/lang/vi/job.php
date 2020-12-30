@@ -37,4 +37,5 @@ return [
     'list_apply' => 'Danh sách ứng viên',
     'accept' => 'Chấp nhận',
     'reject' => 'Từ chối',
+    'delete_job' => 'Bạn có muốn xóa công việc này?',
 ];

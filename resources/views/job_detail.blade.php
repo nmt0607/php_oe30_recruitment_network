@@ -39,7 +39,7 @@
                                     <p><b>@lang('job.tag'): </b></p>
                                     @foreach ($job->tags as $tag)
                                         <form action="{{ route('job_by_tag', ['id' => $tag->id]) }}" method="GET">
-                                        @csrf
+                                            @csrf
                                             <p>
                                                 &nbsp;
                                                 <button class="tag">{{ $tag->name }}</button>
@@ -86,27 +86,29 @@
                     <h4><b>@lang('job.salary'): </b></h4>
                     <h3><b>&#36; {{ $job->salary }}</b></h3>
                     <br>
-                    @if ($appliedJobs->contains($job))
-                        <li class="dropdown my-drop-down">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <font class="apply-status">@lang('job.waiting')</font>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{ route('cancel_apply', ['id' => $job->id]) }}">
-                                        <font class="apply-status">@lang('job.cancel_apply')</font>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    @else
-                        <form action="{{ route('apply', ['id' => $job->id]) }}" method="POST">
-                            @csrf
-                            @method('patch')
-                            <button type="submit" class="btn btn-primary">
-                                @lang('job.applynow')
-                            </button>
-                        </form>
+                    @if (Auth::check() && Auth::user()->role_id === config('user.candidate'))
+                        @if ($appliedJobs->contains($job))
+                            <li class="dropdown my-drop-down">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <font class="apply-status">@lang('job.waiting')</font>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ route('cancel_apply', ['id' => $job->id]) }}">
+                                            <font class="apply-status">@lang('job.cancel_apply')</font>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @else
+                            <form action="{{ route('apply', ['id' => $job->id]) }}" method="POST">
+                                @csrf
+                                @method('patch')
+                                <button type="submit" class="btn btn-default">
+                                    @lang('job.applynow')
+                                </button>
+                            </form>
+                        @endif
                     @endif
                     <hr>
                     <div class="row">
@@ -119,12 +121,14 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="single" >
+                    <div class="single">
                         <div class="col_3">
                             <h3>@lang('job.similar')</h3>
                             <ul class="list_1">
                                 @foreach ($similarJobs as $similarJob)
-                                    <li><a href="{{ route('jobs.show', ['job' => $similarJob]) }}">{{ $similarJob->title }}</a></li>
+                                    <li><a
+                                            href="{{ route('jobs.show', ['job' => $similarJob]) }}">{{ $similarJob->title }}</a>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>

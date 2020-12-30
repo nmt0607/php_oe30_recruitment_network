@@ -37,4 +37,5 @@ return [
     'list_apply' => 'List Candidate',
     'accept' => 'Accept',
     'reject' => 'Reject',
+    'delete_job' => 'Do you want to delete this job?',
 ];

@@ -52,8 +52,25 @@ class AdminController extends Controller
 
     public function viewListJob()
     {
-        $approveJobs = Job::with(['tags', 'company'])->where('status', config('job_config.approve'))->get();
-        $unapproveJobs = Job::with(['tags', 'company'])->where('status', config('job_config.unapprove'))->get();
+        $approveJobs = Job::with(['tags', 'company', 'images'])->where('status', config('job_config.approve'))->get();
+        $unapproveJobs = Job::with(['tags', 'company', 'images'])->where('status', config('job_config.unapprove'))->get();
+        foreach ($approveJobs as $job) {
+            $image =  $job->images()->firstWhere('type', config('user.avatar'));
+            if ($image) {
+                $job->url = $image->url;
+            } else {
+                $job->url = config('user.default_avatar_company');
+            }
+        }
+
+        foreach ($unapproveJobs as $job) {
+            $image =  $job->images()->firstWhere('type', config('user.avatar'));
+            if ($image) {
+                $job->url = $image->url;
+            } else {
+                $job->url = config('user.default_avatar_company');
+            }
+        }
 
         return view('job_list', [
             'approveJobs' => $approveJobs,
@@ -64,12 +81,7 @@ class AdminController extends Controller
     public function approveJob($id)
     {
         Job::where('id', $id)->update(['status' => config('job_config.approve')]);
-        $approveJobs = Job::with(['tags', 'company'])->where('status', config('job_config.approve'));
-        $unapproveJobs = Job::with(['tags', 'company'])->where('status', config('job_config.unapprove'));
 
-        return view('job_list', [
-            'approveJobs' => $approveJobs,
-            'unapproveJobs' => $unapproveJobs,
-        ]);
+        return redirect()->route('list_job');
     }
 }

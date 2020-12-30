@@ -30,3 +30,5 @@ mix.js('resources/js/filter_job.js', 'public/js')
     .js('resources/js/suitable_job.js', 'public/js')
 
 mix.styles('resources/css/user.css', 'public/css/user.css')
+
+mix.js('resources/js/job_history.js', 'public/js')

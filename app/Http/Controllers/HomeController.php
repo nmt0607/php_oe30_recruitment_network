@@ -24,14 +24,15 @@ class HomeController extends Controller
     public function index()
     {
         $allJobs = Job::with('images')->orderBy('created_at', 'desc')->get();
-        
+
         foreach ($allJobs as $job) {
             $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
         }
-        
+
         $newJobs = $allJobs->take(config('user.limit'))->all();
 
         if (Auth::check()) {
+            $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
             $tags = array();
             $tagSkill = Auth::user()->tags->where('type', config('tag_config.skill'))->first();
 
@@ -62,8 +63,10 @@ class HomeController extends Controller
                     $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
                 }
 
-                return view('home', compact('allJobs', 'newJobs', 'suitableJobs'));
+                return view('home', compact('allJobs', 'newJobs', 'suitableJobs', 'appliedJobs'));
             }
+
+            return view('home', compact('allJobs', 'newJobs', 'appliedJobs'));
         }
 
         return view('home', compact('allJobs', 'newJobs'));

@@ -8,9 +8,9 @@
                 <div class="but_list">
                     <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active" id="all-job">
+                            <li role="presentation" id="all-job" class="active">
                                 <a href="" role="tab" id="profile-tab" data-toggle="tab"
-                                    aria-controls="profile">@lang('home.all')</a>
+                                    aria-controls="profile">@lang('job.all')</a>
                             </li>
                             @if (isset($suitableJobs) && Auth::user()->role_id === config('user.candidate'))
                                 <li role="presentation" id="suitable-job">
@@ -63,7 +63,7 @@
                                                         @endforeach
                                                     </span>
                                                 </div>
-                                                <div class="col-md-5 single_right">
+                                                <div class="col-md-4 single_right">
                                                     <p>
                                                         <b>@lang('job.exp'): </b>
                                                         {{ $job->experience }}
@@ -74,14 +74,33 @@
                                                     </p>
                                                 </div>
                                                 @if (Auth::check() && Auth::user()->role_id === config('user.candidate'))
-                                                    <div class="col-md-2 single_right">
-                                                        <form action="{{ route('apply', ['id' => $job->id]) }}" method="POST">
-                                                            @method('patch')
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-primary">
-                                                                @lang('job.apply')
-                                                            </button>
-                                                        </form>
+                                                    <div class="col-md-3 single_right">
+                                                        @if ($appliedJobs->contains($job))
+                                                            <li class="dropdown my-drop-down">
+                                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                                    <font class="apply-status">@lang('job.waiting')</font>
+                                                                </a>
+                                                                <ul class="dropdown-menu">
+                                                                    <li>
+                                                                        <a
+                                                                            href="{{ route('cancel_apply', ['id' => $job->id]) }}">
+                                                                            <font class="apply-status">
+                                                                                @lang('job.cancel_apply')
+                                                                            </font>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        @else
+                                                            <form action="{{ route('apply', ['id' => $job->id]) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('patch')
+                                                                <button type="submit" class="btn btn-default">
+                                                                    @lang('job.apply')
+                                                                </button>
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 @endif
                                             </div>
@@ -138,7 +157,7 @@
                                                             @endforeach
                                                         </span>
                                                     </div>
-                                                    <div class="col-md-5 single_right">
+                                                    <div class="col-md-4 single_right">
                                                         <p>
                                                             <b>@lang('job.exp'): </b>
                                                             {{ $job->experience }}
@@ -149,14 +168,35 @@
                                                         </p>
                                                     </div>
                                                     @if (Auth::check() && Auth::user()->role_id === config('user.candidate'))
-                                                        <div class="col-md-2 single_right">
-                                                            <form action="{{ route('apply', ['id' => $job->id]) }}" method="POST">
-                                                                @method('patch')
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-primary">
-                                                                    @lang('job.apply')
-                                                                </button>
-                                                            </form>
+                                                        <div class="col-md-3 single_right">
+                                                            @if ($appliedJobs->contains($job))
+                                                                <li class="dropdown my-drop-down">
+                                                                    <a href="#" class="dropdown-toggle"
+                                                                        data-toggle="dropdown">
+                                                                        <font class="apply-status">@lang('job.waiting')
+                                                                        </font>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li>
+                                                                            <a
+                                                                                href="{{ route('cancel_apply', ['id' => $job->id]) }}">
+                                                                                <font class="apply-status">
+                                                                                    @lang('job.cancel_apply')
+                                                                                </font>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            @else
+                                                                <form action="{{ route('apply', ['id' => $job->id]) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('patch')
+                                                                    <button type="submit" class="btn btn-default">
+                                                                        @lang('job.apply')
+                                                                    </button>
+                                                                </form>
+                                                            @endif
                                                         </div>
                                                     @endif
                                                 </div>
@@ -168,7 +208,6 @@
                                 </div>
                             </div>
                         @endif
-
                     </div>
                 </div>
             </div>

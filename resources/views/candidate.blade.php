@@ -30,25 +30,34 @@
                     <div class="follow_jobs">
                         @foreach ($users as $user)
                             <div class="featured"></div>
-                            <img src="" alt="" class="img-circle">
-                            <div class="title">
-                                <h5>{{ $user->name }}</h5>
-                                @switch ($user->pivot->status)
-                                    @case (config('job_config.waiting'))
-                                    <p>
-                                        <a
-                                            href="{{ route('accept_reject', ['user_id' => $user->id, 'job_id' => $job->id, 'status' => config('job_config.accepted')]) }}">@lang('job.accept')</a>
-                                        <a
-                                            href="{{ route('accept_reject', ['user_id' => $user->id, 'job_id' => $job->id, 'status' => config('job_config.rejected')]) }}">@lang('job.reject')</a>
-                                    </p>
-                                    @break
-                                    @case (config('job_config.accepted'))
-                                    <p>@lang('job.accepted')</p>
-                                    @break
-                                    @default
-                                    <p>@lang('job.rejected')</p>
-                                @endswitch
-                            </div>
+                            <a href="{{ route('users.show', ['user' => $user]) }} ">
+                                <img src="{{ asset($user->image->url) }}" alt="" class="img-circle">
+                                <div class="title my-title">
+                                    <div class="user" >
+                                        <h5>{{ $user->name }}</h5>
+                                        @if ($user->pivot->status == config('job_config.accepted'))
+                                            <p>@lang('job.accepted')</p>
+                                        @elseif ($user->pivot->status == config('job_config.rejected'))
+                                            <p>@lang('job.rejected')</p>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        @if ($user->pivot->status == config('job_config.waiting'))
+                                            <form action="{{ route('accept_reject', ['user_id' => $user->id, 'job_id' => $job->id, 'status' => config('job_config.accepted')]) }}" method="POST">
+                                                @csrf
+                                                @method('patch')
+                                                <button type="submit" class="btn btn-warning" ><p>@lang('job.accept')</p>
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('accept_reject', ['user_id' => $user->id, 'job_id' => $job->id, 'status' => config('job_config.rejected')]) }}" method="POST">
+                                                @csrf
+                                                @method('patch')
+                                                <button type="submit" class="btn btn-primary"><p>@lang('job.reject')</p>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
                             </a>
                         @endforeach
                     </div>

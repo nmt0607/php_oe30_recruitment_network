@@ -10,6 +10,11 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function viewListUser()
     {
         $allUsers = User::all();
@@ -22,29 +27,15 @@ class AdminController extends Controller
         ]);
     }
 
-    public function blockUser($id)
+    public function updateUser($id, $status)
     {
         $user = User::findOrFail($id);
-        $user->update(['status' => config('user.block')]);
-        $allUsers = User::all();
-        $candidates = $allUsers->where('role_id', config('user.candidate'));
-        $employers = $allUsers->where('role_id', config('user.candidate'));
-
-        return view('user_list', [
-            'candidates' => $candidates,
-            'employers' => $employers,
-        ]);
-    }
-
-    public function acceptEmployer($id)
-    {
-        $user = User::findOrFail($id);
-        $user->update(['status' => config('user.confirmed')]);
+        $user->update(['status' => $status]);
         $allUsers = User::all();
         $candidates = $allUsers->where('role_id', config('user.candidate'));
         $employers = $allUsers->where('role_id', config('user.employer'));
 
-        return view('user_list', [
+        return redirect()->route('list_user', [
             'candidates' => $candidates,
             'employers' => $employers,
         ]);

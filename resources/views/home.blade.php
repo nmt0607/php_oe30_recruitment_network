@@ -211,6 +211,7 @@
                                     </div>
                                     <hr>
                                 @endforeach
+                                <center>{{ $allJobs->links() }}</center>
                             </div>
                         </div>
                     </div>

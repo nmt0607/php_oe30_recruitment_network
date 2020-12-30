@@ -23,8 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $allJobs = Job::with('images')->orderBy('created_at', 'desc')->get();
-
+        $allJobs = Job::with('images')->orderBy('created_at', 'desc')->paginate(config('job_config.paginate'));
         foreach ($allJobs as $job) {
             $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
         }

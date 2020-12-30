@@ -109,6 +109,7 @@
                                     </div>
                                     <hr>
                                 @endforeach
+                                <center>{{ $allJobs->links() }}</center>
                             </div>
                         </div>
                         @if (isset($suitableJobs) && Auth::user()->role_id === config('user.candidate'))
@@ -209,7 +210,9 @@
                             </div>
                         @endif
                     </div>
+
                 </div>
+
             </div>
             <div class="col-md-3">
                 <div class="col_3">

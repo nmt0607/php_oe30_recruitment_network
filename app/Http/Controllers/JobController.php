@@ -14,7 +14,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $allJobs = Job::with('images')->orderBy('created_at', 'desc')->paginate(config('job_config.paginate'));
+        $allJobs = Job::where('status', config('job_config.approve'))->with('images')->orderBy('created_at', 'desc')->paginate(config('job_config.paginate'));
         $skills = Tag::where('type', config('tag_config.skill'))->get();
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
@@ -41,6 +41,7 @@ class JobController extends Controller
                     ->join('taggables', 'jobs.id', '=', 'taggables.taggable_id')
                     ->join('tags', 'tags.id', '=', 'taggables.tag_id')
                     ->select('jobs.id')
+                    ->where('status', config('job_config.approve'))
                     ->whereIn('tags.id', $tags)
                     ->where('taggable_type', Job::class)
                     ->groupBy('jobs.id')
@@ -223,20 +224,25 @@ class JobController extends Controller
     public function filter(Request $request)
     {
         if (is_null($request->tag)) {
-            $jobs = Job::all();
-
+            $jobs = Job::where('status', config('job_config.approve'))->get();
+            $appliedJobs = null;
+            if (Auth::check()) {
+                $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
+            }
             foreach ($jobs as $job) {
                 $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
             }
 
             return view('layouts.filter_job', [
                 'jobs' => $jobs,
+                'appliedJobs' => $appliedJobs,
             ]);
         }
         $filterJobsId = DB::table('jobs')
             ->join('taggables', 'jobs.id', '=', 'taggables.taggable_id')
             ->join('tags', 'tags.id', '=', 'taggables.tag_id')
             ->select('jobs.id')
+            ->where('status', config('job_config.approve'))
             ->whereIn('tags.id', $request->tag)
             ->where('taggable_type', Job::class)
             ->groupBy('jobs.id')
@@ -264,7 +270,7 @@ class JobController extends Controller
     public function search(Request $request)
     {
         if ($request->title) {
-            $jobs = Job::with('images')->where('title', 'LIKE', '%' . $request->title . '%')->get();
+            $jobs = Job::where('status', config('job_config.approve'))->with('images')->where('title', 'LIKE', '%' . $request->title . '%')->get();
 
             foreach ($jobs as $job) {
                 $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
@@ -289,9 +295,9 @@ class JobController extends Controller
     public function findJobByTag($id)
     {
         $tag = Tag::findOrFail($id);
-        $jobs = $tag->jobs()->paginate(config('job_config.paginate'));
+        $jobs = $tag->jobs->where('status', config('job_config.approve'))->paginate(config('job_config.paginate'));
         $tag = Auth::user()->tags->where('type', config('tag_config.skill'))->first();
-        $suitableJobs = $tag->jobs;
+        $suitableJobs = $tag->jobs->where('status', config('job_config.approve'))->get();
         if (is_null($tag)) {
             $suitableJobs = Job::orderBy('created_at', 'desc')->with('tags')->get();
         }

@@ -121,3 +121,7 @@
     </div>
 </div>
 @endsection
+
+@section('script')
+    <script src="{{ asset('bower_components/ckeditor/ckeditor.js') }}"></script>
+@endsection

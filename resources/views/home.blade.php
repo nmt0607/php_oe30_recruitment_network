@@ -87,10 +87,10 @@
                                                             {{ $job->salary }}
                                                         </p>
                                                     </div>
-                                                    @if (Auth::user() === config('user.candidate'))
+                                                    @if (Auth::user()->role_id === config('user.candidate'))
                                                         <div class="col-md-2 single_right">
-                                                            <form action="{{ route('apply', ['id' => $job->id]) }}"
-                                                                method="POST">
+                                                            <form action="{{ route('apply', ['id' => $job->id]) }}" method="POST">
+                                                                @method('patch')
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-primary">
                                                                     @lang('job.apply')
@@ -153,6 +153,17 @@
                                                         {{ $job->salary }}
                                                     </p>
                                                 </div>
+                                                @if (Auth::check() && Auth::user()->role_id === config('user.candidate'))
+                                                    <div class="col-md-2 single_right">
+                                                        <form action="{{ route('apply', ['id' => $job->id]) }}" method="POST">
+                                                            @method('patch')
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-primary">
+                                                                @lang('job.apply')
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="clearfix"> </div>
                                         </div>

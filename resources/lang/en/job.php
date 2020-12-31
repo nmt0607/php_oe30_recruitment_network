@@ -3,7 +3,7 @@
 return [
     'featured_employer' => 'Featured Employer',
     'create' => 'Create Job',
-    'title' =>'Title',
+    'title' => 'Title',
     'edit' => "Edit Job",
     'save' => 'Save',
     'description' => "Description",
@@ -34,4 +34,7 @@ return [
     'rejected' => 'Rejected',
     'accepted' => 'Accepted',
     'cancel_apply' => 'Cancel Apply',
+    'list_apply' => 'List Candidate',
+    'accept' => 'Accept',
+    'reject' => 'Reject',
 ];

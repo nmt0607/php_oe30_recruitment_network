@@ -7,8 +7,8 @@
                 <div class="col-sm-4 follow_left">
                     <div class="jobs-item with-thumb">
                         <div class="thumb">
-                            <a href="">
-                                <img src="" class="img-responsive" alt="" />
+                            <a href="{{ route('companies.show', ['company' => $job->company_id]) }}">
+                                <img src="{{ asset($job->url) }}" class="img-responsive" alt="" />
                             </a>
                         </div>
                         <div class="jobs_right">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="col-sm-8 follow_left">
-                    <h4>@lang('job.listapply')</h4>
+                    <h4>@lang('job.list_apply')</h4>
                     <div class="follow_jobs">
                         @foreach ($users as $user)
                             <div class="featured"></div>
@@ -35,19 +35,21 @@
                                 <h5>{{ $user->name }}</h5>
                                 @switch ($user->pivot->status)
                                     @case (config('job_config.waiting'))
-                                        <p>
-                                            <a href="{{ route('accept_reject', ['user_id' => $user->id, 'job_id' => $job->id, 'status' => config('job_config.accepted')]) }}">@lang('job.accept')</a>
-                                            <a href="{{ route('accept_reject', ['user_id' => $user->id, 'job_id' => $job->id, 'status' => config('job_config.rejected')]) }}">@lang('job.reject')</a>
-                                        </p>
-                                        @break
+                                    <p>
+                                        <a
+                                            href="{{ route('accept_reject', ['user_id' => $user->id, 'job_id' => $job->id, 'status' => config('job_config.accepted')]) }}">@lang('job.accept')</a>
+                                        <a
+                                            href="{{ route('accept_reject', ['user_id' => $user->id, 'job_id' => $job->id, 'status' => config('job_config.rejected')]) }}">@lang('job.reject')</a>
+                                    </p>
+                                    @break
                                     @case (config('job_config.accepted'))
-                                        <p>@lang('job.accepted')</p>
-                                        @break
+                                    <p>@lang('job.accepted')</p>
+                                    @break
                                     @default
-                                        <p>@lang('job.rejected')</p>
+                                    <p>@lang('job.rejected')</p>
                                 @endswitch
                             </div>
-                        </a>
+                            </a>
                         @endforeach
                     </div>
                 </div>

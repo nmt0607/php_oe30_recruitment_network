@@ -3,7 +3,7 @@
 return [
     'featured_employer' => 'Công ty nổi bật',
     'create' => 'Tạo mới công việc',
-    'title' =>'Title',
+    'title' => 'Tiêu đề',
     'edit' => "Sửa",
     'save' => 'Lưu',
     'description' => "Mô tả công việc",
@@ -34,4 +34,7 @@ return [
     'rejected' => 'Đã bị từ chối',
     'accepted' => 'Đã được chấp nhận',
     'cancel_apply' => 'Hủy ứng tuyển',
+    'list_apply' => 'Danh sách ứng viên',
+    'accept' => 'Chấp nhận',
+    'reject' => 'Từ chối',
 ];

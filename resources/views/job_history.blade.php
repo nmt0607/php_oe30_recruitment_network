@@ -11,7 +11,8 @@
                         <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
                             <ul id="myTab" class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active">
-                                    <a href="" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">
+                                    <a href="" id="home-tab" role="tab" data-toggle="tab" aria-controls="home"
+                                        aria-expanded="true">
                                         @lang('job.history')
                                     </a>
                                 </li>
@@ -22,8 +23,9 @@
                                         <div class="tab_grid">
                                             <div class="jobs-item with-thumb" href="">
                                                 <div class="thumb">
-                                                    <a href="">
-                                                        <img src="" alt="" />
+                                                    <a
+                                                        href="{{ route('companies.show', ['company' => $job->company_id]) }}">
+                                                        <img src="{{ asset($job->url) }}" class="img-responsive" alt="" />
                                                     </a>
                                                 </div>
                                                 <div class="jobs_right">
@@ -32,7 +34,8 @@
                                                     </div>
                                                     <div class="date_desc">
                                                         <h6 class="title">
-                                                            <a href="{{ route('jobs.show', ['job' => $job]) }}">{{ $job->title }}</a>
+                                                            <a
+                                                                href="{{ route('jobs.show', ['job' => $job]) }}">{{ $job->title }}</a>
                                                         </h6>
                                                         <span class="meta">{{ $job->company->address }}</span>
                                                     </div>
@@ -64,24 +67,27 @@
                                                 <div class="clearfix"></div>
                                                 <ul class="top-btns">
                                                     <li>
-                                                        <form action="{{ route('list_candidate', ['id' => $job->id]) }}" method="GET">
-                                                         @csrf
+                                                        <form action="{{ route('list_candidate', ['id' => $job->id]) }}"
+                                                            method="GET">
+                                                            @csrf
                                                             <button type="submit" class="fa fa-users btn">
                                                             </button>
                                                         </form>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('jobs.edit', ['job' => $job]) }}" method="GET">
-                                                         @csrf
-                                                            <button type="submit" class="fa fa-pencil btn" >
+                                                        <form action="{{ route('jobs.edit', ['job' => $job]) }}"
+                                                            method="GET">
+                                                            @csrf
+                                                            <button type="submit" class="fa fa-pencil btn">
                                                             </button>
                                                         </form>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('jobs.destroy', ['job' => $job]) }}" method="POST">
-                                                         @csrf
-                                                         @method('delete')
-                                                            <button type="submit" class="fa fa-trash-o btn" >
+                                                        <form action="{{ route('jobs.destroy', ['job' => $job]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="fa fa-trash-o btn">
                                                             </button>
                                                         </form>
                                                     </li>

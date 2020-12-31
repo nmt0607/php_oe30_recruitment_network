@@ -18,11 +18,11 @@ class JobController extends Controller
         $skills = Tag::where('type', config('tag_config.skill'))->get();
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
-
         foreach ($allJobs as $job) {
             $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
         }
         if (Auth::check()) {
+            $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
             $tags = array();
             $tagSkill = Auth::user()->tags->where('type', config('tag_config.skill'))->first();
 
@@ -53,10 +53,11 @@ class JobController extends Controller
                     $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
                 }
 
-                return view('listjob', compact('allJobs', 'skills', 'langs', 'workingTimes', 'suitableJobs'));
+                return view('listjob', compact('allJobs', 'skills', 'langs', 'workingTimes', 'suitableJobs', 'appliedJobs'));
             }
+
+            return view('listjob', compact('allJobs', 'skills', 'langs', 'workingTimes', 'appliedJobs'));
         }
-        $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
 
         return view('listjob', compact('allJobs', 'skills', 'langs', 'workingTimes'));
     }
@@ -83,6 +84,8 @@ class JobController extends Controller
         if ($this->authorize('create', Job::class)) {
             $job = Job::create($request->all());
             $job->tags()->attach($request->tag);
+
+            return redirect()->route('history');
         }
     }
 
@@ -98,13 +101,13 @@ class JobController extends Controller
         }
         $jobCurrent = Job::where('id', $id)->get();
         $similarJobs = $similarJobs->diff($jobCurrent);
-        $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
+        if (Auth::check()) {
+            $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
 
-        return view('job_detail', [
-            'similarJobs' => $similarJobs,
-            'appliedJobs' => $appliedJobs,
-            'job' => $job,
-        ]);
+            return view('job_detail', compact('similarJobs', 'appliedJobs', 'job'));
+        }
+
+        return view('job_detail', compact('similarJobs', 'job'));
     }
 
     public function edit($id)
@@ -130,6 +133,8 @@ class JobController extends Controller
         if ($this->authorize('update', $job)) {
             $job->update($request->all());
             $job->tags()->sync($request->tag);
+
+            return redirect()->route('jobs.show', ['job' => $id]);
         }
     }
 
@@ -139,6 +144,8 @@ class JobController extends Controller
         if ($this->authorize('update', $job)) {
             $job->tags()->detach();
             $job->delete();
+
+            return redirect()->route('history');
         }
     }
 
@@ -209,7 +216,7 @@ class JobController extends Controller
         if ($this->authorize('update', $job)) {
             $job->users()->where('user_id', $userId)->update(['applications.status' => $status]);
 
-            return redirect()->route('list_candidate');
+            return redirect()->route('list_candidate', ['id' => $jobId]);
         }
     }
 
@@ -239,6 +246,14 @@ class JobController extends Controller
 
         foreach ($filterJobs as $job) {
             $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
+        }
+        if (Auth::check()) {
+            $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
+
+            return view('layouts.filter_job', [
+                'appliedJobs' => $appliedJobs,
+                'jobs' => $filterJobs,
+            ]);
         }
 
         return view('layouts.filter_job', [

@@ -40,4 +40,5 @@ return [
     'how_it_work' => 'Cách thức hoạt động',
     'employer' => 'Nhà tuyển dụng',
     'candidate' => 'Ứng viên',
+    'admin_user' => 'Danh sách người dùng',
 ];

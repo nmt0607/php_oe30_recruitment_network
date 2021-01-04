@@ -24,7 +24,7 @@
             <div class="left-side">
                 <div class="profile-side">
                     <p class="user-mail"><i class="fa fa-envelope"></i>{{ $user->email }}</p>
-                    @if ($user->roler_id === config('user.candidate'))
+                    @if ($user->role_id === config('user.candidate'))
                         <div class="profile-btn">
                             <button class="chatbtn" id="chatBtn"><a class="fa fa-download" href="{{ asset($user->cv) }}"
                                     download="cv">@lang('job.download')</a></button>

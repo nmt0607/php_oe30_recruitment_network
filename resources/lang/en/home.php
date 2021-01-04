@@ -40,4 +40,5 @@ return [
     'how_it_work' => 'How it works',
     'employer' => 'Employer',
     'candidate' => 'Candidate',
+    'admin_user' => 'List User',
 ];

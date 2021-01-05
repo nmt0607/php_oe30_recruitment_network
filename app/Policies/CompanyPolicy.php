@@ -53,7 +53,11 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company)
     {
-        return $user->company->id === $company->id;
+        if ($user->role_id === config('user.employer')) {
+            return $user->company->id === $company->id;
+        }
+
+        return false;
     }
 
     /**

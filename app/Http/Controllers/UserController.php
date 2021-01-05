@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Tag;
 use App\Models\Image;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Database\Eloquent\Builder;
+use Alert;
 
 class UserController extends Controller
 {
@@ -51,8 +53,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-
-        return view('user_profile', compact('user'));
+        if ($this->authorize('view', $user)) {
+            return view('user_profile', compact('user'));
+        }
     }
 
     /**
@@ -118,6 +121,7 @@ class UserController extends Controller
             }
 
             $user->save();
+            Alert::success(trans('job.update_messeage'));
 
             return redirect()->route('home');
         }

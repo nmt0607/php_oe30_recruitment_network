@@ -53,7 +53,11 @@ class JobPolicy
      */
     public function update(User $user, Job $job)
     {
-        return $user->company->id === $job->company->id;
+        if ($user->role_id === config('user.employer')) {
+            return $user->company->id === $job->company->id;
+        }
+
+        return false;
     }
 
     /**
@@ -65,7 +69,11 @@ class JobPolicy
      */
     public function delete(User $user, Job $job)
     {
-        return $user->company->id === $job->company->id;
+        if ($user->role_id === config('user.employer')) {
+            return $user->company->id === $job->company->id;
+        }
+
+        return false;
     }
 
     /**

@@ -9,6 +9,7 @@ use App\Models\Job;
 use App\Models\User;
 use App\Models\Company;
 use DB;
+use Alert;
 
 class JobController extends Controller
 {
@@ -84,6 +85,7 @@ class JobController extends Controller
         if ($this->authorize('create', Job::class)) {
             $job = Job::create($request->all());
             $job->tags()->attach($request->tag);
+            Alert::success(trans('job.create_messeage'));
 
             return redirect()->route('history');
         }
@@ -133,6 +135,7 @@ class JobController extends Controller
         if ($this->authorize('update', $job)) {
             $job->update($request->all());
             $job->tags()->sync($request->tag);
+            Alert::success(trans('job.edit_messeage'));
 
             return redirect()->route('jobs.show', ['job' => $id]);
         }
@@ -154,6 +157,7 @@ class JobController extends Controller
         $user = Auth::user();
         $job = Job::findOrFail($id);
         $job->users()->attach($user->id, ['status' => config('job_config.waiting')]);
+        Alert::success(trans('job.apply_messeage'));
 
         return redirect()->route('show_apply_list');
     }
@@ -163,6 +167,7 @@ class JobController extends Controller
         $user = Auth::user();
         $job = Job::findOrFail($id);
         $job->users()->detach($user->id);
+        Alert::success(trans('job.cancle_messeage'));
 
         return redirect()->route('show_apply_list');
     }

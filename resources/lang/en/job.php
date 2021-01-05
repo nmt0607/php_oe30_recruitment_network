@@ -38,4 +38,9 @@ return [
     'accept' => 'Accept',
     'reject' => 'Reject',
     'delete_job' => 'Do you want to delete this job?',
+    'apply_messeage' => 'Apply job successfully',
+    'create_messeage' => 'Create the post successfully',
+    'edit_messeage' => 'Correct the post successfully',
+    'cancle_messeage' => 'Cancle apply job successfully',
+    'update_messeage' => 'Update profile successfully',
 ];

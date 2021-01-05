@@ -38,4 +38,9 @@ return [
     'accept' => 'Chấp nhận',
     'reject' => 'Từ chối',
     'delete_job' => 'Bạn có muốn xóa công việc này?',
+    'apply_messeage' => 'Ứng tuyển công việc thành công',
+    'create_messeage' => 'Đăng bài tuyển dụng thành công',
+    'edit_messeage' => 'Sửa bài thành công',
+    'cancle_messeage' => 'Bỏ ứng tuyển công việc thành công',
+    'update_messeage' => 'Cập nhật thông tin thành công',
 ];

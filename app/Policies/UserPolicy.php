@@ -3,8 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Job;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserPolicy
 {
@@ -18,7 +20,6 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        
     }
 
     /**
@@ -28,9 +29,18 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $userNeedAuthor)
     {
-        
+        if ($user->id === $userNeedAuthor->id) {
+            return true;
+        }
+        if ($user->role_id === config('user.employer')) {
+            $jobs = $userNeedAuthor->jobs()->where('company_id', $user->company->id)->get();
+
+            return $jobs->count();
+        }
+
+        return false;
     }
 
     /**
@@ -90,12 +100,5 @@ class UserPolicy
     public function forceDelete(User $user, User $model)
     {
         //
-    }
-
-    public function before(User $user)
-    {
-        if ($user->role_id == config('user.admin')) {
-            return true;
-        }
     }
 }

@@ -26,10 +26,10 @@
             </div>
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="{{ route('jobs.index') }}">@lang('home.listjobs')</a>
-                    </li>
                     @if (!Auth::check())
+                        <li>
+                            <a href="{{ route('jobs.index') }}">@lang('home.listjobs')</a>
+                        </li>
                         <li>
                             <a href="{{ route('login') }}">@lang('home.login')</a>
                         </li>
@@ -37,6 +37,9 @@
                             <a href="{{ route('register') }}">@lang('home.register')</a>
                         </li>
                     @elseif (Auth::user()->role_id === config('user.employer'))
+                        <li>
+                            <a href="{{ route('jobs.index') }}">@lang('home.listjobs')</a>
+                        </li>
                         <li>
                             <a class="" type="button" data-toggle="dropdown">@lang('home.profile_user')
                                 <span class="caret"></span></a>
@@ -64,12 +67,10 @@
                                         href="{{ route('companies.edit', ['company' => Auth::user()->company->id]) }}">@lang('layout.edit_company')</a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="{{ route('history')}}">@lang('layout.list_job_created')</a>
+                                    <a href="{{ route('history') }}">@lang('layout.list_job_created')</a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="{{ route('jobs.create')}}">@lang('layout.create_job')</a>
+                                    <a href="{{ route('jobs.create') }}">@lang('layout.create_job')</a>
                                 </li>
                             </ul>
                         </li>
@@ -81,7 +82,25 @@
                                 </form>
                             </a>
                         </li>
+                    @elseif (Auth::user()->role_id === config('user.admin'))
+                        <li>
+                            <a href="{{ route('list_user') }}">@lang('home.admin_user')</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('list_job') }}">@lang('home.listjobs')</a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <input id="logout-input" type="submit" value="@lang('home.logout')">
+                                </form>
+                            </a>
+                        </li>
                     @else
+                        <li>
+                            <a href="{{ route('jobs.index') }}">@lang('home.listjobs')</a>
+                        </li>
                         <li>
                             <a class="" type="button" data-toggle="dropdown">@lang('home.profile_user')
                                 <span class="caret"></span></a>
@@ -95,8 +114,7 @@
                                         href="{{ route('users.edit', ['user' => Auth::user()->id]) }}">@lang('layout.edit_profile')</a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="{{ route('show_apply_list') }}">@lang('layout.show_apply_list')</a>
+                                    <a href="{{ route('show_apply_list') }}">@lang('layout.show_apply_list')</a>
                                 </li>
                             </ul>
                         </li>
@@ -199,31 +217,31 @@
                 </form>
             </div>
             <div class="col-sm-2 grid_3">
-                    <ul>
-                        <li class="dropdown my-drop-down">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <p><i class="fa fa-globe"></i>
-                                    @if (App::isLocale(Config::get('user.en')))
-                                        @lang('home.english')
-                                    @else
-                                        @lang('home.vietnamese')
-                                    @endif
-                                </p>
-                            </a>
-                            <ul class="dropdown-menu my-drop-down-menu">
-                                <li>
-                                    <a href="{{ route('change-language', ['locale' => Config::get('user.en')]) }}">
-                                        @lang('home.english')
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('change-language', ['locale' => Config::get('user.vi')]) }}">
-                                        @lang('home.vietnamese')
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                <ul>
+                    <li class="dropdown my-drop-down">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <p><i class="fa fa-globe"></i>
+                                @if (App::isLocale(Config::get('user.en')))
+                                    @lang('home.english')
+                                @else
+                                    @lang('home.vietnamese')
+                                @endif
+                            </p>
+                        </a>
+                        <ul class="dropdown-menu my-drop-down-menu">
+                            <li>
+                                <a href="{{ route('change-language', ['locale' => Config::get('user.en')]) }}">
+                                    @lang('home.english')
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('change-language', ['locale' => Config::get('user.vi')]) }}">
+                                    @lang('home.vietnamese')
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
             <div class="clearfix"> </div>
         </div>

@@ -23,13 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $allJobs = Job::with('images')->orderBy('created_at', 'desc')->paginate(config('job_config.paginate'));
+        $allJobs = Job::where('status', config('job_config.approve'))->with('images')->orderBy('created_at', 'desc')->paginate(config('job_config.paginate'));
         foreach ($allJobs as $job) {
             $job->url =  $job->images()->where('type', config('user.avatar'))->first()->url;
         }
 
         $newJobs = $allJobs->take(config('user.limit'))->all();
-
         if (Auth::check()) {
             $appliedJobs = Auth::user()->jobs()->where('applications.status', config('job_config.waiting'))->get();
             $tags = array();
@@ -50,6 +49,7 @@ class HomeController extends Controller
                     ->join('taggables', 'jobs.id', '=', 'taggables.taggable_id')
                     ->join('tags', 'tags.id', '=', 'taggables.tag_id')
                     ->select('jobs.id')
+                    ->where('status', config('job_config.approve'))
                     ->whereIn('tags.id', $tags)
                     ->where('taggable_type', Job::class)
                     ->groupBy('jobs.id')

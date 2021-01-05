@@ -40,6 +40,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     min-width: 130px;
 }
 
+.my-title {
+    display: flex;
+    width: 80%;
+}
+
+.user {
+    flex: 10;
+}
+
 /* template css */
 
 h4, h5, h6, h1, h2, h3 {
@@ -1279,6 +1288,14 @@ h4.m_1 {
 
 .pagination>li>a, .pagination>li>span {
     border: none;
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    color: #428bca;
+    background-color: #fff;
+    margin-left: -1px;
 }
 
 .follow_jobs p {

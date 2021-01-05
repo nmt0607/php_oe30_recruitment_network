@@ -14,7 +14,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $allJobs = Job::with('images')->orderBy('created_at', 'desc')->get();
+        $allJobs = Job::with('images')->orderBy('created_at', 'desc')->paginate(config('job_config.paginate'));
         $skills = Tag::where('type', config('tag_config.skill'))->get();
         $langs = Tag::where('type', config('tag_config.language'))->get();
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
@@ -289,7 +289,7 @@ class JobController extends Controller
     public function findJobByTag($id)
     {
         $tag = Tag::findOrFail($id);
-        $jobs = $tag->jobs;
+        $jobs = $tag->jobs()->paginate(config('job_config.paginate'));
         $tag = Auth::user()->tags->where('type', config('tag_config.skill'))->first();
         $suitableJobs = $tag->jobs;
         if (is_null($tag)) {
@@ -301,7 +301,7 @@ class JobController extends Controller
         $workingTimes = Tag::where('type', config('tag_config.working_time'))->get();
 
         return view('listjob', [
-            'jobs' => $jobs,
+            'allJobs' => $jobs,
             'suitableJobs' => $suitableJobs,
             'appliedJobs' => $appliedJobs,
             'skills' => $skills,

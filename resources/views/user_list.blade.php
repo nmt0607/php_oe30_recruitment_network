@@ -19,18 +19,53 @@
                     @foreach ($employers as $employer)
                         <a href="{{ route('users.show', ['user' => $employer]) }}">
                             <img src="{{ asset($employer->image->url) }}" alt="" class="img-circle">
-                            <div class="title">
-                                <h5>{{ $employer->name }}</h5>
-                                @switch ($employer->status)
-                                    @case (config('user.block'))
-                                        <p>@lang('user.blocked')</p>
-                                        @break
-                                    @case (config('user.unconfirmed'))
-                                        <p>@lang('user.unapprove')</p>
-                                        @break
-                                    @default
-                                        <p>@lang('user.active')</p>
-                                @endswitch
+                            <div class="title my-title">
+                                <div class="user" >
+                                    <h5>{{ $employer->name }}</h5>
+                                    @switch ($employer->status)
+                                        @case (config('user.block'))
+                                            <p>@lang('user.blocked')</p>
+                                            @break
+                                        @case (config('user.unconfirmed'))
+                                            <p>@lang('user.unapprove')</p>
+                                            @break
+                                        @default
+                                            <p>@lang('user.active')</p>
+                                    @endswitch
+                                </div>
+                                <div>
+                                    @switch ($employer->status)
+                                        @case (config('user.block'))
+                                            <form action="{{ route('update_user', ['id' => $employer->id, 'status' => config('user.confirmed')]) }}" method="GET">
+                                                @csrf
+                                                @method('patch')
+                                                <button type="submit" class="btn btn-primary"><p>@lang('user.unblock')</p>
+                                                </button>
+                                            </form>
+                                            @break
+                                        @case (config('user.unconfirmed'))
+                                            <form action="{{ route('update_user', ['id' => $employer->id, 'status' => config('user.confirmed')]) }}" method="GET">
+                                                @csrf
+                                                <button type="submit" class="btn btn-warning">
+                                                    <p>@lang('user.approve')</p>
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('update_user', ['id' => $employer->id, 'status' => config('user.block')]) }}" method="GET">
+                                                @csrf
+                                                <button data-confirm="@lang('job.block_confirm')" type="submit" class="btn btn-danger button-confirm">
+                                                    <p>@lang('user.block')</p>
+                                                </button>
+                                            </form>
+                                            @break
+                                        @default
+                                            <form action="{{ route('update_user', ['id' => $employer->id, 'status' => config('user.block')]) }}" method="GET">
+                                                @csrf
+                                                <button data-confirm="@lang('job.block_confirm')" type="submit" class="btn btn-danger button-confirm">
+                                                    <p>@lang('user.block')</p>
+                                                </button>
+                                            </form>
+                                    @endswitch
+                                </div>
                             </div>
                         </a>
                     @endforeach
@@ -39,18 +74,39 @@
                     @foreach ($candidates as $candidate)
                         <a href="{{ route('users.show', ['user' => $candidate]) }}">
                             <img src="{{ asset($candidate->image->url) }}" alt="" class="img-circle">
-                            <div class="title">
-                                <h5>{{ $candidate->name }}</h5>
-                                @switch ($candidate->status)
+                            <div class="title my-title" >
+                                <div class="user" >
+                                    <h5>{{ $candidate->name }}</h5>
+                                    @switch ($candidate->status)
+                                        @case (config('user.block'))
+                                            <p>@lang('user.blocked')</p>
+                                            @break
+                                        @case (config('user.unconfirmed'))
+                                            <p>@lang('user.unapprove')</p>
+                                            @break
+                                        @default
+                                            <p>@lang('user.active')</p>
+                                    @endswitch
+                                </div>
+                                <div>
+                                    @switch ($candidate->status)
                                     @case (config('user.block'))
-                                        <p>@lang('user.blocked')</p>
-                                        @break
-                                    @case (config('user.unconfirmed'))
-                                        <p>@lang('user.unapprove')</p>
-                                        @break
+                                    <form action="{{ route('update_user', ['id' => $candidate->id, 'status' => config('user.confirmed')]) }}" method="GET">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">
+                                            <p>@lang('user.unblock')</p>
+                                        </button>
+                                    </form>
+                                    @break
                                     @default
-                                        <p>@lang('user.active')</p>
-                                @endswitch
+                                    <form action="{{ route('update_user', ['id' => $candidate->id, 'status' => config('user.block')]) }}" method="GET">
+                                        @csrf
+                                        <button data-confirm="@lang('job.block_confirm')" type="submit" class="btn btn-danger button-confirm">
+                                            <p>@lang('user.block')</p>
+                                        </button>
+                                    </form>
+                                    @endswitch
+                                </div>
                             </div>
                         </a>
                     @endforeach

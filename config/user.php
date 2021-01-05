@@ -3,6 +3,7 @@
 return [
     'candidate' => 1,
     'employer' => 2,
+    'admin' => 3,
     'unconfirmed' => 0,
     'confirmed' => 1,
     'block' => 2,

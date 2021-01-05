@@ -8,4 +8,8 @@ return [
     'active' => 'Active',
     'blocked' => 'Blocked',
     'unapprove' => 'Has not been approved',
+    'unblock' => 'Unblock',
+    'block' => 'Block',
+    'approve' => 'Approve',
+    'unauthorized' => 'This action is unauthorized',
 ];

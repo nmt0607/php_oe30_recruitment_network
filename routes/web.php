@@ -22,8 +22,7 @@ Route::group(['middleware' => 'localization'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::post('/employer/register', 'RegisterEmployerController@register')
-    ->name('employer.register');
+    Route::post('/employer/register', 'RegisterEmployerController@register')->name('employer.register');
 
     Route::resource('companies', CompanyController::class);
 
@@ -39,7 +38,7 @@ Route::group(['middleware' => 'localization'], function () {
 
     Route::get('list-candidate/{id}','JobController@showListCandidateApply')->name('list_candidate');
 
-    Route::get('accept-reject/{user_id}/{job_id}/{status}','JobController@acceptOrReject')->name('accept_reject');
+    Route::patch('accept-reject/{user_id}/{job_id}/{status}','JobController@acceptOrReject')->name('accept_reject');
 
     Route::resource('users', UserController::class);
 
@@ -52,6 +51,8 @@ Route::group(['middleware' => 'localization'], function () {
     Route::post('filter', 'JobController@filter')->name('filter');
 
     Route::get('/search','JobController@search')->name('search');
+
+    Route::get('update-user/{id}/{status}', 'AdminController@updateUser')->name('update_user');
 });
 
 Route::get('change-language/{locale}', 'HomeController@changeLanguage')->name('change-language');

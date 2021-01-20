@@ -2502,16 +2502,16 @@
         },
         {
             "name": "realrashid/sweet-alert",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/realrashid/sweet-alert.git",
-                "reference": "f9450bd8ccc5522f7e7c042bd97031f849ad44f8"
+                "reference": "5c07913e4679ddc75e26d9333ee6480f46018e94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/f9450bd8ccc5522f7e7c042bd97031f849ad44f8",
-                "reference": "f9450bd8ccc5522f7e7c042bd97031f849ad44f8",
+                "url": "https://api.github.com/repos/realrashid/sweet-alert/zipball/5c07913e4679ddc75e26d9333ee6480f46018e94",
+                "reference": "5c07913e4679ddc75e26d9333ee6480f46018e94",
                 "shasum": ""
             },
             "require": {
@@ -2564,6 +2564,12 @@
                 "sweet-alert2",
                 "toast"
             ],
+            "support": {
+                "docs": "https://realrashid.github.io/sweet-alert/",
+                "email": "realrashid05@gmail.com",
+                "issues": "https://github.com/realrashid/sweet-alert/issues",
+                "source": "https://github.com/realrashid/sweet-alert"
+            },
             "funding": [
                 {
                     "url": "https://ko-fi.com/realrashid",
@@ -2582,7 +2588,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-02T09:39:26+00:00"
+            "time": "2021-01-14T21:46:42+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7260,5 +7266,5 @@
         "php": "^7.2.5|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

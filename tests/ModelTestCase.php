@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-abstract class ModelTestCase extends TestCase
+class ModelTestCase extends TestCase
 {
     /**
      * @param Model $model

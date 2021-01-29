@@ -5,6 +5,11 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Application\ApplicationRepositoryInterface;
 use App\Repositories\Application\ApplicationRepository;
+use App\Repositories\Job\JobRepositoryInterface;
+use App\Repositories\Job\JobRepository;
+use App\Repositories\Tag\TagRepositoryInterface;
+use App\Repositories\Tag\TagRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
             ApplicationRepository::class
         );
 
+        $this->app->singleton(JobRepositoryInterface::class, JobRepository::class);
+        $this->app->singleton(TagRepositoryInterface::class, TagRepository::class);
     }
 
     /**

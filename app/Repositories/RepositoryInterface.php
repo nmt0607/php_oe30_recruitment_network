@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+
 interface RepositoryInterface
 {
     /**
@@ -38,4 +39,6 @@ interface RepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
+    public function findById(int $id);
 }

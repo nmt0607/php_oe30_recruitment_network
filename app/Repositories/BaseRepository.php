@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+
 use App\Repositories\RepositoryInterface;
 
 abstract class BaseRepository implements RepositoryInterface
@@ -10,6 +11,18 @@ abstract class BaseRepository implements RepositoryInterface
     protected $model;
 
    //khởi tạo
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Class BaseRepository
+ *
+ * @package App\Repositories
+ */
+abstract class BaseRepository implements RepositoryInterface
+{
+    protected $model;
+
     public function __construct()
     {
         $this->setModel();
@@ -21,42 +34,44 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * Set model
      */
+    abstract public function getModel();
+
     public function setModel()
     {
         $this->model = app()->make(
             $this->getModel()
         );
     }
-    
+
     public function getAll()
     {
         return $this->model->all();
     }
-    
+
     public function find($id)
     {
         $result = $this->model->findOrFail($id);
 
         return $result;
     }
-    
+
     public function create($attributes = [])
     {
         return $this->model->create($attributes);
     }
-    
+
     public function update($id, $attributes = [])
     {
         $result = $this->model->find($id);
         if ($result) {
             $result->update($attributes);
-            
+
             return $result;
         }
 
         return false;
     }
-    
+
     public function delete($id)
     {
         $result = $this->model->find($id);
@@ -67,6 +82,10 @@ abstract class BaseRepository implements RepositoryInterface
         }
 
         return false;
-    
+    }
+
+    public function findById(int $id)
+    {
+        return $this->model->findOrFail($id);
     }
 }

@@ -28,17 +28,17 @@ Route::group(['middleware' => 'localization'], function () {
 
     Route::resource('jobs', 'JobController');
 
-    Route::patch('apply/{id}', 'JobController@apply')->name('apply');
+    Route::patch('apply/{id}', 'ApplicationController@apply')->name('apply');
 
-    Route::get('cancel-apply/{id}', 'JobController@cancelApply')->name('cancel_apply');
+    Route::get('cancel-apply/{id}', 'ApplicationController@cancelApply')->name('cancel_apply');
 
-    Route::get('show-apply-list', 'JobController@showApplyList')->name('show_apply_list');
+    Route::get('show-apply-list', 'ApplicationController@showApplyList')->name('show_apply_list');
 
-    Route::get('history','JobController@showHistoryCreateJob')->name('history');
+    Route::get('history','ApplicationController@showHistoryCreateJob')->name('history');
 
-    Route::get('list-candidate/{id}','JobController@showListCandidateApply')->name('list_candidate');
+    Route::get('list-candidate/{id}','ApplicationController@showListCandidateApply')->name('list_candidate');
 
-    Route::patch('accept-reject/{user_id}/{job_id}/{status}','JobController@acceptOrReject')->name('accept_reject');
+    Route::patch('accept-reject/{user_id}/{job_id}/{status}','ApplicationController@acceptOrReject')->name('accept_reject');
 
     Route::resource('users', UserController::class);
 
@@ -48,15 +48,13 @@ Route::group(['middleware' => 'localization'], function () {
 
     Route::get('approve-job/{id}', 'AdminController@approveJob')->name('approve_job');
 
-    Route::post('filter', 'JobController@filter')->name('filter');
+    Route::post('filter', 'SearchController@filter')->name('filter');
 
-    Route::get('/search','JobController@search')->name('search');
+    Route::get('/search','SearchController@search')->name('search');
+
+    Route::get('job-by-tag/{id}', 'SearchController@findJobByTag')->name('job_by_tag');
 
     Route::get('update-user/{id}/{status}', 'AdminController@updateUser')->name('update_user');
 });
 
 Route::get('change-language/{locale}', 'HomeController@changeLanguage')->name('change-language');
-
-Route::get('/search','JobController@search')->name('search');
-
-Route::get('job-by-tag/{id}', 'JobController@findJobByTag')->name('job_by_tag');
